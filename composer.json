@@ -1,0 +1,7 @@
+{
+    "name": "changwoo/naran-tag-merger",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "stable",
+    "require": {}
+}
