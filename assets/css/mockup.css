@@ -1,3 +1,13 @@
+#naran-terms-merger .collapsed {
+    display: none;
+}
+
+#naran-terms-merger .remove {
+    display: inline-block;
+    margin-top: 6px;
+    color: #cb1616;
+}
+
 .ntm-tab-frame {
     display: none;
 }
@@ -21,31 +31,20 @@
 }
 
 .ntm-item-wrap {
-    margin: 0;
+    margin: 0 0 10px 0;
     border: solid 1px #c3c4c7;
+
     position: relative;
     border-radius: 3px;
-}
-
-#ntm-terms .ntm-item-wrap.current > .ntm-title-wrap {
-    background-color: #81bcf0;
-}
-
-#ntm-terms .ntm-item-inside.collapsed {
-    display: none;
-}
-
-#ntm-terms .ntm-title-wrap {
     cursor: pointer;
 }
 
-.ntm-item-wrap {
-    margin-bottom: 10px;
+.ntm-title-wrap {
+    background-color: #dcdcde;
 }
 
-.ntm-title-wrap {
-    background-color: white;
-    position: relative;
+.ntm-item-wrap.current > .ntm-title-wrap {
+    background-color: #f0f0f1;
 }
 
 .ntm-item-title {
@@ -89,7 +88,13 @@
 }
 
 .ntm-slot-title-action {
-    font-size: 0.88em;
+    font-size: 0.80em;
+    font-weight: 400;
+    display: none;
+}
+
+.ntm-slot.current .ntm-item-title:hover .ntm-slot-title-action {
+    display: unset;
 }
 
 .ntm-slot-tool {
@@ -120,7 +125,7 @@
     background-color: #81bcf0;
 }
 
-.ntm-slot-assigned-terms .remove {
+.ntm-slot-assigned-terms .remove-term {
     margin-left: 5px;
     cursor: pointer;
     padding: 0 4px 1px;
@@ -132,7 +137,7 @@
     font-weight: 600;
 }
 
-.ntm-slots {
+#ntm-slots {
     margin: 10px 0;
 }
 
@@ -144,7 +149,6 @@
     margin-right: 20px;
 }
 
-.ntm-slot-actions > *:not(:last-child):after {
-    margin-left: 17px;
-    content: "|";
+.ntm-slot-name-input {
+    margin-bottom: 10px;
 }

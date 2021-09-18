@@ -15,6 +15,7 @@ if ( ! class_exists( 'NTM_Main' ) ) {
 		public static function get_instance(): NTM_Main {
 			if ( ! static::$instance ) {
 				static::$instance = new self();
+                static::$instance->init();
 			}
 			return static::$instance;
 		}
@@ -32,10 +33,12 @@ if ( ! class_exists( 'NTM_Main' ) ) {
 		}
 
 		private function __construct() {
-			if ( in_array( wp_get_environment_type(), [ 'local', 'develop' ], true ) ) {
-				require_once dirname( NTM_MAIN ) . '/includes/class-ntm-mockup.php';
-				$this->modules['mockup'] = new NTM_Mockup();
-			}
 		}
+
+        private function init() {
+            if ( in_array( wp_get_environment_type(), [ 'local', 'develop' ], true ) ) {
+                $this->modules['mockup'] = new NTM_Mockup();
+            }
+        }
 	}
 }

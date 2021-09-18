@@ -12,7 +12,7 @@ if ( ! trait_exists( 'NTM_Template_Impl' ) ) {
 			$paths = [
 				STYLESHEETPATH . "/ntm/{$tmpl_name}",
 				TEMPLATEPATH . "/ntm/{$tmpl_name}",
-				dirname( NTM_MAIN ) . "/templates/{$tmpl_name}",
+				dirname( NTM_MAIN ) . "/includes/templates/{$tmpl_name}",
 			];
 
 			$located = false;
@@ -33,8 +33,7 @@ if ( ! trait_exists( 'NTM_Template_Impl' ) ) {
 					extract( $context, EXTR_SKIP );
 				}
 
-				/** @noinspection PhpIncludeInspection */
-				include $located;
+                include $located;
 
 				if ( ! $echo ) {
 					return ob_get_clean();

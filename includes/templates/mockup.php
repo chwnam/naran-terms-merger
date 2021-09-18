@@ -12,15 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <div id="naran-terms-merger">
         <nav class="nav-tab-wrapper wp-clearfix" aria-label="Secondary Menu">
-            <a id="ntm-tab-terms" href="javascript: void(0);" class="nav-tab nav-tab-active"
+            <a id="ntm-tab-terms" href="javascript: void(0);" class="nav-tab "
                data-target-frame="ntm-frame-terms"
                aria-current="page">Terms</a>
-            <a id="ntm-tab-slots" href="javascript: void(0);" class="nav-tab "
+            <a id="ntm-tab-slots" href="javascript: void(0);" class="nav-tab nav-tab-active"
                data-target-frame="ntm-frame-slots">Slots</a>
         </nav>
 
         <div class="ntm-tab-frame-wrap">
-            <div id="ntm-frame-terms" class="ntm-tab-frame ntm-frame-active">
+            <div id="ntm-frame-terms" class="ntm-tab-frame ">
                 <ul class="ntm-frame-controls">
                     <li>
                         <label for="taxonomy-selector">Taxonomy</label>:
@@ -89,7 +89,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
             </div>
 
-            <div id="ntm-frame-slots" class="ntm-tab-frame ">
+            <div id="ntm-frame-slots" class="ntm-tab-frame ntm-frame-active">
                 <ul class="ntm-frame-controls">
                     <li>
                         <button type="button" class="button">Add new slot</button>
@@ -97,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </ul>
 
                 <div class="ntm-frame-content">
-                    <ul class="ntm-slots">
+                    <ul id="ntm-slots">
                         <li class="ntm-slot ntm-item-wrap">
                             <div class="ntm-title-wrap">
                                 <h3 class="ntm-item-title">
@@ -107,12 +107,11 @@ if ( ! defined( 'ABSPATH' ) ) {
                                        role="button">Edit name...</a>
                                 </h3>
                                 <div class="ntm-item-control">
-                                    <span class="ntm-item-icon ntm-icon-no"
-                                          title="Delete this slot"></span>
+                                    <span class="ntm-item-toggle ntm-item-icon ntm-icon-chevron-up"></span>
                                 </div>
                             </div>
-                            <div class="ntm-item-inside">
-                                <div class="ntm-slot-tool">
+                            <div class="ntm-item-inside collapsed">
+                                <div class="ntm-slot-tool collapsed">
                                     <div class="ntm-slot-name-input">
                                         <label for="slot-name">Name</label>
                                         <input id="slot-name"
@@ -121,24 +120,24 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                placeholder="Name of this slot"
                                                value="">
                                         <button type="button"
-                                                class="button">OK
+                                                class="button ntm-button-rename-slot">OK
                                         </button>
                                         <button type="button"
-                                                class="button">Cancel
+                                                class="button ntm-button-cancel">Cancel
                                         </button>
                                     </div>
+                                    <hr>
                                 </div>
-                                <hr>
                                 <div class="ntm-slot-item">
                                     <h4>Assigned terms</h4>
                                     <ul class="ntm-slot-assigned-terms">
                                         <li class="header-term" title="Term ID: 414">
                                             Term one
-                                            <span class="remove">&times;</span>
+                                            <span class="remove-term">&times;</span>
                                         </li>
                                         <li title="Term ID: 418">
                                             Term two
-                                            <span class="remove">&times;</span>
+                                            <span class="remove-term">&times;</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -157,6 +156,12 @@ if ( ! defined( 'ABSPATH' ) ) {
                                             <button type="button"
                                                     class="button button-primary">Merge Terms
                                             </button>
+                                        </li>
+                                        <li>
+                                            <a href="javascript: void(0);"
+                                               role="button"
+                                               class="remove">Remove this slot
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -172,12 +177,11 @@ if ( ! defined( 'ABSPATH' ) ) {
                                        role="button">Edit name...</a>
                                 </h3>
                                 <div class="ntm-item-control">
-                                    <span class="ntm-item-icon ntm-icon-no"
-                                          title="Delete this slot"></span>
+                                    <span class="ntm-item-toggle ntm-item-icon ntm-icon-chevron-up"></span>
                                 </div>
                             </div>
-                            <div class="ntm-item-inside">
-                                <div class="ntm-slot-tool">
+                            <div class="ntm-item-inside collapsed">
+                                <div class="ntm-slot-tool collapsed">
                                     <div class="ntm-slot-name-input">
                                         <label for="slot-name">Name</label>
                                         <input id="slot-name"
@@ -186,24 +190,24 @@ if ( ! defined( 'ABSPATH' ) ) {
                                                placeholder="Name of this slot"
                                                value="">
                                         <button type="button"
-                                                class="button">OK
+                                                class="button ntm-button-rename-slot">OK
                                         </button>
                                         <button type="button"
-                                                class="button">Cancel
+                                                class="button ntm-button-cancel">Cancel
                                         </button>
                                     </div>
+                                    <hr>
                                 </div>
-                                <hr>
                                 <div class="ntm-slot-item">
                                     <h4>Assigned terms</h4>
                                     <ul class="ntm-slot-assigned-terms">
                                         <li class="header-term" title="Term ID: 414">
                                             Term one
-                                            <span class="remove">&times;</span>
+                                            <span class="remove-term">&times;</span>
                                         </li>
                                         <li title="Term ID: 418">
                                             Term two
-                                            <span class="remove">&times;</span>
+                                            <span class="remove-term">&times;</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -222,6 +226,12 @@ if ( ! defined( 'ABSPATH' ) ) {
                                             <button type="button"
                                                     class="button button-primary">Merge Terms
                                             </button>
+                                        </li>
+                                        <li>
+                                            <a href="javascript: void(0);"
+                                               role="button"
+                                               class="remove">Remove this slot
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>

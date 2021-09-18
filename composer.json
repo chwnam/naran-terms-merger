@@ -1,7 +1,21 @@
 {
-    "name": "changwoo/naran-tag-merger",
-    "type": "wordpress-plugin",
-    "license": "GPL-2.0-or-later",
-    "minimum-stability": "stable",
-    "require": {}
+  "name": "changwoo/naran-tag-merger",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "stable",
+  "require": {},
+  "autoload": {
+    "classmap": [
+      "includes"
+    ],
+    "files": [
+      "includes/functions.php"
+    ]
+  },
+  "scripts": {
+    "daa": "@composer dump-autoload -a"
+  },
+  "scripts-descriptions": {
+    "daa": "Alias of 'compoer dump-autoload -a'."
+  }
 }

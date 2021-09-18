@@ -22,37 +22,47 @@
             });
 
             frame = document.getElementById(e.currentTarget.dataset.targetFrame);
-            if(frame) {
+            if (frame) {
                 frame.classList.add('ntm-frame-active');
             }
         });
     });
 
     jQuery(function ($) {
-        var ntmTerms = $('#ntm-terms'),
-            items = ntmTerms.children('li');
+        var ul = $('#ntm-terms, #ntm-slots');
 
-        for (var i = 0; i < 10; ++i) {
-            ntmTerms.append(items[0].outerHTML);
-        }
+        ul.on('click', '.ntm-title-wrap', function (e) {
+            var wrap = $(e.currentTarget),
+                ul = wrap.closest('ul'),
+                li = wrap.closest('li'),
+                span = wrap.find('span.ntm-item-toggle');
 
-        ntmTerms.on('click', '.ntm-title-wrap', function (e) {
-            var wrap  = $(e.currentTarget),
-                span = wrap.find('span.ntm-item-toggle'),
-                li = wrap.closest('li');
+            ul.children('.current').removeClass('current');
 
-            if(span.hasClass('ntm-icon-chevron-up')) {
+            if (span.hasClass('ntm-icon-chevron-up')) {
                 span.removeClass('ntm-icon-chevron-up');
                 span.addClass('ntm-icon-chevron-down');
+                li.addClass('current');
             } else {
                 span.removeClass('ntm-icon-chevron-down');
                 span.addClass('ntm-icon-chevron-up');
             }
+            span.closest('.ntm-item-wrap').find('.ntm-item-inside').toggleClass('collapsed');
+        });
 
-            ntmTerms.children('.current').removeClass('current');
-            li.addClass('current');
+        $('#ntm-slots').on('click', '.ntm-slot-title-action', function (e) {
+            var a = $(e.currentTarget),
+                li = a.closest('li'),
+                tool = li.find('.ntm-slot-tool');
 
-            span.closest('.ntm-item-wrap').find('.ntm-item-inside').toggle('collapsed');
-        })
+            e.stopPropagation();
+            if (tool.hasClass('collapsed')) {
+                tool.removeClass('collapsed');
+            }
+        }).on('click', '.ntm-button-cancel', function (e) {
+            var button = $(e.currentTarget),
+                tool = button.closest('.ntm-slot-tool');
+            tool.addClass('collapsed');
+        });
     });
 })(jQuery);
