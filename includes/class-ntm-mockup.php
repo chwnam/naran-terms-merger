@@ -28,9 +28,16 @@ if ( ! class_exists( 'NTM_Mockup' ) ) {
 		}
 
 		public function register_scripts() {
+			wp_register_style(
+				'ntm-mockup',
+				plugins_url( 'assets/css/mockup.css', NTM_MAIN ),
+				[],
+				NTM_VER
+			);
+
 			wp_register_script(
-				'ntm-mock',
-				plugins_url( 'assets/mockup.js', NTM_MAIN ),
+				'ntm-mockup',
+				plugins_url( 'assets/js/mockup.js', NTM_MAIN ),
 				[ 'jquery' ],
 				NTM_VER
 			);
@@ -38,8 +45,8 @@ if ( ! class_exists( 'NTM_Mockup' ) ) {
 
 		public function enqueue_scripts( string $hook ) {
 			if ( $this->page_hook === $hook ) {
-				wp_enqueue_script( 'ntm-mock' );
-				wp_enqueue_style( 'ntm' );
+				wp_enqueue_style( 'ntm-mockup' );
+				wp_enqueue_script( 'ntm-mockup' );
 			}
 		}
 

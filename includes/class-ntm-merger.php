@@ -27,17 +27,23 @@ if ( ! class_exists( 'NTM_Merger' ) ) {
 				true
 			);
 
-			wp_register_script(
-				'ntm',
-				plugins_url( 'assets/merger.js', NTM_MAIN ),
-				[ 'ntm-jquery-block-ui', 'wp-util' ],
-				NTM_VER,
-				true
-			);
+			if ( file_exists( dirname( NTM_MAIN ) . '/assets/js/build/ntm.asset.php' ) ) {
+				$ntm_asset = include dirname( NTM_MAIN ) . '/assets/js/build/ntm.asset.php';
+				if ( isset( $ntm_asset['dependencies'], $ntm_asset['version'] ) ) {
+					$ntm_asset['dependencies'][] = 'wp-util';
+					wp_register_script(
+						'ntm-script',
+						plugins_url( 'assets/js/build/ntm.js', NTM_MAIN ),
+						$ntm_asset['dependencies'],
+						$ntm_asset['version'],
+						true
+					);
+				}
+			}
 
 			wp_register_style(
-				'ntm',
-				plugins_url( 'assets/style.css', NTM_MAIN ),
+				'ntm-style',
+				plugins_url( 'assets/css/style.css', NTM_MAIN ),
 				[],
 				NTM_VER
 			);
@@ -46,16 +52,17 @@ if ( ! class_exists( 'NTM_Merger' ) ) {
 		public function enqueue_scripts( $hook ) {
 			if ( $hook === $this->hook ) {
 				wp_localize_script(
-					'ntm',
+					'ntm-script',
 					'ntm',
 					[
-						'nonce' => wp_create_nonce( 'ntm' ),
+						'nonce'      => wp_create_nonce( 'ntm' ),
+						'taxonomies' => $this->get_taxonomies(),
 					]
 				);
 
-				wp_enqueue_script( 'ntm' );
+				wp_enqueue_script( 'ntm-script' );
 
-				wp_enqueue_style( 'ntm' );
+				wp_enqueue_style( 'ntm-style' );
 			}
 		}
 
@@ -114,6 +121,28 @@ if ( ! class_exists( 'NTM_Merger' ) ) {
 
 				wp_send_json_success( $output );
 			}
+		}
+
+		private function get_taxonomies(): array {
+			$result = [
+				'hierarchical' => [],
+				'flat'         => [],
+			];
+
+			/** @var array<string, WP_Taxonomy> $hierarchical */
+			$hierarchical = get_taxonomies( [ 'hierarchical' => true, 'public' => true ], 'objects' );
+			foreach ( $hierarchical as $taxonomy => $obj ) {
+				$result['hierarchical'][ $taxonomy ] = $obj->label;
+			}
+
+			/** @var array<string, WP_Taxonomy> $flat */
+			$flat = get_taxonomies( [ 'hierarchical' => false, 'public' => true ], 'objects' );
+			unset( $flat['post_format'] );
+			foreach ( $flat as $taxonomy => $obj ) {
+				$result['flat'][ $taxonomy ] = $obj->label;
+			}
+
+			return $result;
 		}
 	}
 }

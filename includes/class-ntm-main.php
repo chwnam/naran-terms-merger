@@ -32,8 +32,6 @@ if ( ! class_exists( 'NTM_Main' ) ) {
 		}
 
 		private function __construct() {
-			$this->modules['merger'] = new NTM_Merger();
-
 			if ( in_array( wp_get_environment_type(), [ 'local', 'develop' ], true ) ) {
 				require_once dirname( NTM_MAIN ) . '/includes/class-ntm-mockup.php';
 				$this->modules['mockup'] = new NTM_Mockup();

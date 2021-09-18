@@ -1,0 +1,150 @@
+.ntm-tab-frame {
+    display: none;
+}
+
+.ntm-tab-frame.ntm-frame-active {
+    display: block;
+}
+
+.ntm-frame-controls {
+    margin-top: 20px;
+    margin-bottom: 0;
+    display: flex;
+}
+
+.ntm-frame-controls > li {
+    margin-right: 20px;
+}
+
+.short-input {
+    width: 75px;
+}
+
+.ntm-item-wrap {
+    margin: 0;
+    border: solid 1px #c3c4c7;
+    position: relative;
+    border-radius: 3px;
+}
+
+#ntm-terms .ntm-item-wrap.current > .ntm-title-wrap {
+    background-color: #81bcf0;
+}
+
+#ntm-terms .ntm-item-inside.collapsed {
+    display: none;
+}
+
+#ntm-terms .ntm-title-wrap {
+    cursor: pointer;
+}
+
+.ntm-item-wrap {
+    margin-bottom: 10px;
+}
+
+.ntm-title-wrap {
+    background-color: white;
+    position: relative;
+}
+
+.ntm-item-title {
+    margin: 0;
+    padding: 10px;
+}
+
+.ntm-item-inside {
+    margin: 0;
+    padding: 5px 10px;
+    border-top: 1px solid #c3c4c7;
+}
+
+.ntm-term-detail {
+    padding: 5px 0;
+}
+
+.ntm-item-icon {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    cursor: pointer;
+    font-family: dashicons;
+}
+
+.ntm-icon-chevron-up:after {
+    content: "\f343";
+}
+
+.ntm-icon-chevron-down:after {
+    content: "\f347";
+}
+
+.ntm-icon-no:after {
+    content: "\f158";
+}
+
+.ntm-designate-slot-wrap {
+    border-top: 1px solid #c3c4c7;
+    padding: 10px 0 5px;
+}
+
+.ntm-slot-title-action {
+    font-size: 0.88em;
+}
+
+.ntm-slot-tool {
+    margin: 5px 0 11px;
+}
+
+.ntm-slot-name-input > *:not(:last-child) {
+    margin-right: 5px;
+}
+
+.ntm-slot-item > h4 {
+    font-size: 1.25em;
+    margin-top: 12px;
+    margin-bottom: 10px;
+}
+
+.ntm-slot-assigned-terms > * {
+    font-size: 1.12em;
+    padding: 5px 12px;
+    border: 1px solid #cecece;
+    display: inline-block;
+    background-color: #fafafa;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.ntm-slot-assigned-terms > .header-term {
+    background-color: #81bcf0;
+}
+
+.ntm-slot-assigned-terms .remove {
+    margin-left: 5px;
+    cursor: pointer;
+    padding: 0 4px 1px;
+    border: 1px solid #d0d0d0;
+    border-radius: 15px;
+    background-color: #dedede;
+    color: #919191;
+    font-size: 0.88em;
+    font-weight: 600;
+}
+
+.ntm-slots {
+    margin: 10px 0;
+}
+
+.ntm-slot-actions {
+    display: flex;
+}
+
+.ntm-slot-actions > *:not(:last-child) {
+    margin-right: 20px;
+}
+
+.ntm-slot-actions > *:not(:last-child):after {
+    margin-left: 17px;
+    content: "|";
+}

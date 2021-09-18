@@ -5,134 +5,236 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<script>
-    function drag(e) {
-        e.dataTransfer.setData('term', e.target.innerText);
-    }
-
-    function drop(e) {
-        e.preventDefault();
-        var term = e.dataTransfer.getData('term');
-        alert(term + ' received!');
-    }
-
-    function allowDrop(e) {
-        e.preventDefault();
-    }
-</script>
 
 <div class="wrap">
-    <h1>Naran Term Merger (Mockup)</h1>
+    <h1>Naran Terms Merger (Mockup 2)</h1>
     <hr class="wp-header-end">
-    <div id="naran-tag-merger">
-        <div id="taxonomy-selection">
-            <label for="taxonomy">Taxonomy</label>:
-            <select id="taxonomy" autocomplete="off">
-                <option value="" disabled selected>-- Choose a taxonomy --</option>
-                <optgroup label="Hierarchical">
-                    <option value="category">Category</option>
-                </optgroup>
-                <optgroup label="Flat">
-                    <option value="post_tag">Post Tag</option>
-                </optgroup>
-            </select>
-            <button type="button" class="button button-secondary">Select</button>
-        </div>
-        <div id="ntm-container">
-            <section class="ntm-section terms-section">
-                <div>
-                    <h3>All Terms</h3>
-                    <label for="orderby">Order By</label>:
-                    <select id="orderby" autocomplete="off">
-                        <option value="name_asc" selected>Name Asc.</option>
-                        <option value="name_asc">Name Desc.</option>
-                        <option value="count_asc">Count Desc.</option>
-                        <option value="count_desc">Count Desc.</option>
-                    </select>
-                    <button type="button" class="button button-secondary">Reorder</button>
-                </div>
-                <ul id="all-terms" class="slot overflow-y-scroll">
-                    <li draggable="true" ondragstart="drag(event)">
-                        Foo (1)
-                        <div class="merge-group-indicator">Slot #1</div>
+
+    <div id="naran-terms-merger">
+        <nav class="nav-tab-wrapper wp-clearfix" aria-label="Secondary Menu">
+            <a id="ntm-tab-terms" href="javascript: void(0);" class="nav-tab nav-tab-active"
+               data-target-frame="ntm-frame-terms"
+               aria-current="page">Terms</a>
+            <a id="ntm-tab-slots" href="javascript: void(0);" class="nav-tab "
+               data-target-frame="ntm-frame-slots">Slots</a>
+        </nav>
+
+        <div class="ntm-tab-frame-wrap">
+            <div id="ntm-frame-terms" class="ntm-tab-frame ntm-frame-active">
+                <ul class="ntm-frame-controls">
+                    <li>
+                        <label for="taxonomy-selector">Taxonomy</label>:
+                        <select id="taxonomy-selector" autocomplete="off">
+                            <optgroup label="Hierarchical">
+                                <option value="category">Category</option>
+                            </optgroup>
+                            <optgroup label="Flat">
+                                <option value="post_tag">Tag</option>
+                            </optgroup>
+                        </select>
+                        <button type="button" class="button">Load</button>
                     </li>
-                    <li>Bar (2)</li>
-                    <li>Baz (1)</li>
-                    <li>Sample (2)</li>
-                    <li class="selected">Term #1 (10)</li>
-                    <li>Term #2 (10)</li>
-                    <li>Term #3 (10)</li>
-                    <li>Term #4 (10)</li>
-                    <li>Term #5 (10)</li>
-                    <li>Term #6 (10)</li>
-                    <li>Term #7 (10)</li>
-                    <li>Term #8 (10)</li>
-                    <li>Term #9 (10)</li>
-                    <li>Term #10 (10)</li>
-                    <li>Term #11 (10)</li>
-                    <li>Term #12 (10)</li>
-                    <li>Term #13 (10)</li>
-                    <li>Term #14 (10)</li>
-                    <li>Term #15 (10)</li>
-                    <li>Term #16 (10)</li>
-                    <li>Term #17 (10)</li>
-                    <li>Term #18 (10)</li>
-                    <li>Term #19 (10)</li>
-                    <li>Term #20 (10)</li>
-                    <li>Term #21 (10)</li>
-                    <li>Term #22 (10)</li>
-                    <li>Term #23 (10)</li>
-                    <li>Term #24 (10)</li>
-                    <li>Term #25 (10)</li>
-                    <li>Term #26 (10)</li>
-                    <li>Term #27 (10)</li>
-                    <li>Term #28 (10)</li>
-                    <li>Term #29 (10)</li>
-                    <li>Term #30 (10)</li>
-                    <li>Term #31 (10)</li>
-                    <li>Term #32 (10)</li>
-                    <li>Term #33 (10)</li>
-                    <li>Term #34 (10)</li>
-                    <li>Term #35 (10)</li>
-                    <li>Term #36 (10)</li>
-                    <li>Term #37 (10)</li>
-                    <li>Term #38 (10)</li>
-                    <li>Term #39 (10)</li>
-                    <li>Term #40 (10)</li>
-                    <li>Term #41 (10)</li>
-                    <li>Term #42 (10)</li>
-                    <li>Term #43 (10)</li>
-                    <li>Term #44 (10)</li>
-                    <li>Term #45 (10)</li>
-                    <li>Term #46 (10)</li>
-                    <li>Term #47 (10)</li>
-                    <li>Term #48 (10)</li>
-                    <li>Term #49 (10)</li>
                 </ul>
-            </section>
-            <section class="ntm-section action-section">
-                <div>
-                    <h3 class="merge-groups-heading">Merge Groups</h3>
-                    <a href="#" class="new-merge-group button button-secondary">Add</a>
-                    <div>
-                        <h4 class="merge-group-heading">Group #1</h4>
-                        <ul id="selected-terms"
-                            class="slot merge-group"
-                            ondrop="drop(event)" ondragover="allowDrop(event)">
-                            <li class="pivot">
-                                MacIntosh
-                                <span class="remove">&times;</span>
-                            </li>
-                            <li>Empire <span class="remove">&times;</span></li>
-                            <li>Fuji <span class="remove">&times;</span></li>
-                            <li>Gala <span class="remove">&times;</span></li>
-                        </ul>
-                        <p class="merge-wrap">
-                            <button class="button button-primary merge-button" type="button">Merge</button>
-                            <a class="remove-merge-group" href="#">Remove</a>
-                        </p>
-                    </div>
+
+                <div class="frame-content">
+                    <ul id="ntm-terms" class="taxonomy-category">
+                        <li class="ntm-item-wrap">
+                            <div class="ntm-title-wrap">
+                                <h3 class="ntm-item-title">Mockup term #1</h3>
+                                <div class="ntm-item-control">
+                                    <span class="ntm-item-toggle ntm-item-icon ntm-icon-chevron-up"></span>
+                                </div>
+                            </div>
+                            <div class="ntm-item-inside collapsed">
+                                <ul class="ntm-term-detail">
+                                    <li>Term description</li>
+                                    <li>Term ID: 44 | Taxonomy ID: 45 | Slug: sample-slug</li>
+                                    <li><a href="#" target="edit-term">Edit term</a></li>
+                                </ul>
+                                <div class="ntm-designate-slot-wrap">
+                                    <label for="designated-slot">Designated to</label>:
+                                    <select id="designated-slot">
+                                        <option value="slog-1">Slot #1</option>
+                                        <option value="slot-2" selected>Slot #2</option>
+                                        <option value="slot-3">Slot #3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="ntm-item-wrap current">
+                            <div class="ntm-title-wrap">
+                                <h3 class="ntm-item-title">Mockup term #2</h3>
+                                <div class="ntm-item-control">
+                                    <span class="ntm-item-toggle ntm-item-icon ntm-icon-chevron-up"></span>
+                                </div>
+                            </div>
+                            <div class="ntm-item-inside collapsed">
+                                <ul class="ntm-term-detail">
+                                    <li>Term description</li>
+                                    <li>Term ID: 45 | Taxonomy ID: 47 | Slug: sample-slug</li>
+                                    <li><a href="#" target="edit-term">Edit term</a></li>
+                                </ul>
+                                <div class="ntm-designate-slot-wrap">
+                                    <label for="designated-slot">Designated to</label>:
+                                    <select id="designated-slot">
+                                        <option value="slog-1">Slot #1</option>
+                                        <option value="slot-2" selected>Slot #2</option>
+                                        <option value="slot-3">Slot #3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </section>
+            </div>
+
+            <div id="ntm-frame-slots" class="ntm-tab-frame ">
+                <ul class="ntm-frame-controls">
+                    <li>
+                        <button type="button" class="button">Add new slot</button>
+                    </li>
+                </ul>
+
+                <div class="ntm-frame-content">
+                    <ul class="ntm-slots">
+                        <li class="ntm-slot ntm-item-wrap">
+                            <div class="ntm-title-wrap">
+                                <h3 class="ntm-item-title">
+                                    [#1] Mockup Slot #1
+                                    <a href="javascript: void(0);"
+                                       class="ntm-slot-title-action"
+                                       role="button">Edit name...</a>
+                                </h3>
+                                <div class="ntm-item-control">
+                                    <span class="ntm-item-icon ntm-icon-no"
+                                          title="Delete this slot"></span>
+                                </div>
+                            </div>
+                            <div class="ntm-item-inside">
+                                <div class="ntm-slot-tool">
+                                    <div class="ntm-slot-name-input">
+                                        <label for="slot-name">Name</label>
+                                        <input id="slot-name"
+                                               type="text"
+                                               class="text"
+                                               placeholder="Name of this slot"
+                                               value="">
+                                        <button type="button"
+                                                class="button">OK
+                                        </button>
+                                        <button type="button"
+                                                class="button">Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="ntm-slot-item">
+                                    <h4>Assigned terms</h4>
+                                    <ul class="ntm-slot-assigned-terms">
+                                        <li class="header-term" title="Term ID: 414">
+                                            Term one
+                                            <span class="remove">&times;</span>
+                                        </li>
+                                        <li title="Term ID: 418">
+                                            Term two
+                                            <span class="remove">&times;</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <hr>
+                                <div class="ntm-slot-item">
+                                    <h4>Actions</h4>
+                                    <ul class="ntm-slot-actions">
+                                        <li>
+                                            <label for="header-term">Header term</label>
+                                            <select id="header-term">
+                                                <option value="414">Term one</option>
+                                                <option value="418">Term two</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            <button type="button"
+                                                    class="button button-primary">Merge Terms
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="ntm-slot ntm-item-wrap">
+                            <div class="ntm-title-wrap">
+                                <h3 class="ntm-item-title">
+                                    [#2] Mockup Slot #2
+                                    <a href="javascript: void(0);"
+                                       class="ntm-slot-title-action"
+                                       role="button">Edit name...</a>
+                                </h3>
+                                <div class="ntm-item-control">
+                                    <span class="ntm-item-icon ntm-icon-no"
+                                          title="Delete this slot"></span>
+                                </div>
+                            </div>
+                            <div class="ntm-item-inside">
+                                <div class="ntm-slot-tool">
+                                    <div class="ntm-slot-name-input">
+                                        <label for="slot-name">Name</label>
+                                        <input id="slot-name"
+                                               type="text"
+                                               class="text"
+                                               placeholder="Name of this slot"
+                                               value="">
+                                        <button type="button"
+                                                class="button">OK
+                                        </button>
+                                        <button type="button"
+                                                class="button">Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="ntm-slot-item">
+                                    <h4>Assigned terms</h4>
+                                    <ul class="ntm-slot-assigned-terms">
+                                        <li class="header-term" title="Term ID: 414">
+                                            Term one
+                                            <span class="remove">&times;</span>
+                                        </li>
+                                        <li title="Term ID: 418">
+                                            Term two
+                                            <span class="remove">&times;</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <hr>
+                                <div class="ntm-slot-item">
+                                    <h4>Actions</h4>
+                                    <ul class="ntm-slot-actions">
+                                        <li>
+                                            <label for="header-term">Header term</label>
+                                            <select id="header-term">
+                                                <option value="414">Term one</option>
+                                                <option value="418">Term two</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            <button type="button"
+                                                    class="button button-primary">Merge Terms
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
     </div>
+</div>
+
+<script>
+
+</script>
