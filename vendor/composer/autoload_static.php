@@ -12,11 +12,21 @@ class ComposerStaticInit6476400c3def7d893a994883c6f4b821
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'NTM_Hooks_Impl' => __DIR__ . '/../..' . '/includes/trait-ntm-hooks-impl.php',
-        'NTM_Main' => __DIR__ . '/../..' . '/includes/class-ntm-main.php',
+        'NTM_Container' => __DIR__ . '/../..' . '/includes/class-ntm-container.php',
+        'NTM_Hooks_Impl' => __DIR__ . '/../..' . '/includes/traits/trait-ntm-hooks-impl.php',
         'NTM_Merger' => __DIR__ . '/../..' . '/includes/modules/class-ntm-merger.php',
         'NTM_Mockup' => __DIR__ . '/../..' . '/includes/modules/class-ntm-mockup.php',
-        'NTM_Template_Impl' => __DIR__ . '/../..' . '/includes/trait-ntm-template-impl.php',
+        'NTM_Module' => __DIR__ . '/../..' . '/includes/interfaces/interface-ntm-module.php',
+        'NTM_Modules_Impl' => __DIR__ . '/../..' . '/includes/traits/trait-ntm-modules-impl.php',
+        'NTM_Register' => __DIR__ . '/../..' . '/includes/interfaces/interface-ntm-register.php',
+        'NTM_Register_Script' => __DIR__ . '/../..' . '/includes/registers/class-ntm-register-script.php',
+        'NTM_Register_Style' => __DIR__ . '/../..' . '/includes/registers/class-ntm-register-style.php',
+        'NTM_Registers' => __DIR__ . '/../..' . '/includes/modules/class-ntm-registers.php',
+        'NTM_Registrable' => __DIR__ . '/../..' . '/includes/interfaces/interface-ntm-registrable.php',
+        'NTM_Registrable_Script' => __DIR__ . '/../..' . '/includes/registrables/class-ntm-registrable-script.php',
+        'NTM_Registrable_Style' => __DIR__ . '/../..' . '/includes/registrables/class-ntm-registrable-style.php',
+        'NTM_Template_Impl' => __DIR__ . '/../..' . '/includes/traits/trait-ntm-template-impl.php',
+        'NTM_Terms_Merger' => __DIR__ . '/../..' . '/includes/modules/class-ntm-terms-merger.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

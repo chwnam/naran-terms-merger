@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'ntm' ) ) {
-	function ntm(): NTM_Main {
-		return NTM_Main::get_instance();
+	function ntm(): NTM_Container {
+		return NTM_Container::get_instance();
 	}
 }

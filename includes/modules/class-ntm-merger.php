@@ -12,10 +12,10 @@ if ( ! class_exists( 'NTM_Merger' ) ) {
 		private string $hook = '';
 
 		public function __construct() {
-			$this->action( 'admin_enqueue_scripts', 'register_scripts', 10 )
-			     ->action( 'admin_enqueue_scripts', 'enqueue_scripts', 20 )
-			     ->action( 'admin_menu', 'admin_menu' )
-			     ->action( 'wp_ajax_ntm_get_terms', 'ajax_get_terms' );
+			$this->add_action( 'admin_enqueue_scripts', 'register_scripts', 10 )
+			     ->add_action( 'admin_enqueue_scripts', 'enqueue_scripts', 20 )
+			     ->add_action( 'admin_menu', 'admin_menu' )
+			     ->add_action( 'wp_ajax_ntm_get_terms', 'ajax_get_terms' );
 		}
 
 		public function register_scripts() {
