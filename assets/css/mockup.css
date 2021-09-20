@@ -33,14 +33,13 @@
 .ntm-item-wrap {
     margin: 0 0 10px 0;
     border: solid 1px #c3c4c7;
-
     position: relative;
     border-radius: 3px;
-    cursor: pointer;
 }
 
 .ntm-title-wrap {
     background-color: #dcdcde;
+    cursor: pointer;
 }
 
 .ntm-item-wrap.current > .ntm-title-wrap {
@@ -151,4 +150,9 @@
 
 .ntm-slot-name-input {
     margin-bottom: 10px;
+}
+
+.ntm-no-items > p {
+    font-size: 1.8em;
+    text-align: center;
 }

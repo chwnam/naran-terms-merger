@@ -48,8 +48,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <div class="ntm-item-inside collapsed">
                                 <ul class="ntm-term-detail">
                                     <li>Term description</li>
-                                    <li>Term ID: 44 | Taxonomy ID: 45 | Slug: sample-slug</li>
-                                    <li><a href="#" target="edit-term">Edit term</a></li>
+                                    <li>Term ID: 45</li>
+                                    <li>Taxonomy ID: 47</li>
+                                    <li>Slug: sample-slug</li>
                                 </ul>
                                 <div class="ntm-designate-slot-wrap">
                                     <label for="designated-slot">Designated to</label>:
@@ -72,8 +73,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <div class="ntm-item-inside collapsed">
                                 <ul class="ntm-term-detail">
                                     <li>Term description</li>
-                                    <li>Term ID: 45 | Taxonomy ID: 47 | Slug: sample-slug</li>
-                                    <li><a href="#" target="edit-term">Edit term</a></li>
+                                    <li>Term ID: 45</li>
+                                    <li>Taxonomy ID: 47</li>
+                                    <li>Slug: sample-slug</li>
                                 </ul>
                                 <div class="ntm-designate-slot-wrap">
                                     <label for="designated-slot">Designated to</label>:
@@ -84,6 +86,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                                     </select>
                                 </div>
                             </div>
+                        </li>
+
+                        <li class="ntm-no-items">
+                            <p>[No items found]</p>
                         </li>
                     </ul>
                 </div>

@@ -3,12 +3,15 @@
   "description": "",
   "license": "GPL-2.0-or-later",
   "version": "",
-  "devDependencies": {
-    "@wordpress/scripts": "^18.0.1"
-  },
   "main": "assets/js/build/ntm.js",
   "scripts": {
     "start": "wp-scripts start src/ntm.js --output-path=assets/js/build",
     "build": "wp-scripts build src/ntm.js --output-path=assets/js/build"
+  },
+  "dependencies": {
+    "axios": "^0.21.4"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^18.0.1"
   }
 }
