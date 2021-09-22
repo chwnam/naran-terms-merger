@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                 <div class="frame-content">
                     <ul id="ntm-terms" class="taxonomy-category">
-                        <li class="ntm-item-wrap">
+                        <li class="ntm-term ntm-item-wrap">
                             <div class="ntm-title-wrap">
                                 <h3 class="ntm-item-title">Mockup term #1</h3>
                                 <div class="ntm-item-control">
@@ -242,6 +242,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                                     </ul>
                                 </div>
                             </div>
+                        </li>
+
+                        <li class="ntm-no-items">
+                            <p>[No slots found. Please create a new slot]</p>
                         </li>
                     </ul>
                 </div>

@@ -4,10 +4,14 @@ function Frame(props) {
     const id = props.id,
         classNames = props.classNames;
 
-    return <div
-        id={id}
-        className={classNames.join(' ')}
-    >{props.children}</div>;
+    return (
+        <div
+            id={id}
+            className={classNames.join(' ')}
+        >
+            {props.children}
+        </div>
+    );
 }
 
 export default Frame;

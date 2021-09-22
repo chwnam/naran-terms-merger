@@ -1,6 +1,6 @@
 import React from "react";
 
-function TermsFrameContent(props) {
+function FrameContent(props) {
     return (
         <div className="frame-content">
             {props.children}
@@ -8,4 +8,4 @@ function TermsFrameContent(props) {
     );
 }
 
-export default TermsFrameContent;
+export default FrameContent;

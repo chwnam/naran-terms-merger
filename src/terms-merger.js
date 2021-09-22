@@ -14,21 +14,21 @@ class TermsMerger extends React.Component {
             tabs: {
                 terms: {
                     id: 'ntm-tab-terms',
-                    classNames: ['nav-tab', 'nav-tab-active'],
+                    classNames: ['nav-tab'],
                 },
                 slots: {
                     id: 'ntm-tab-slots',
-                    classNames: ['nav-tab'],
+                    classNames: ['nav-tab', 'nav-tab-active'],
                 }
             },
             frames: {
                 terms: {
                     id: 'ntm-frame-terms',
-                    classNames: ['ntm-tab-frame', 'ntm-frame-active']
+                    classNames: ['ntm-tab-frame']
                 },
                 slots: {
                     id: 'ntm-frame-slots',
-                    classNames: ['ntm-tab-frame']
+                    classNames: ['ntm-tab-frame', 'ntm-frame-active']
                 }
             }
         }
@@ -40,13 +40,13 @@ class TermsMerger extends React.Component {
         return <>
             <NavWrap>
                 <NavTab
-                    stateKey="terms"
+                    tabId="terms"
                     tabData={this.state.tabs.terms}
                     onClickTab={this.onClickTab}
                 >Terms</NavTab>
 
                 <NavTab
-                    stateKey="slots"
+                    tabId="slots"
                     tabData={this.state.tabs.slots}
                     onClickTab={this.onClickTab}
                 >Slots</NavTab>
@@ -70,18 +70,18 @@ class TermsMerger extends React.Component {
         </>;
     }
 
-    onClickTab(key) {
-        if (this.state.tabs.hasOwnProperty(key)) {
+    onClickTab(tabId) {
+        if (this.state.tabs.hasOwnProperty(tabId)) {
             this.setState((state) => {
                 Object.keys(state.tabs).map(k => {
                     state.tabs[k].classNames = ['nav-tab'];
                 });
-                state.tabs[key].classNames.push('nav-tab-active');
+                state.tabs[tabId].classNames.push('nav-tab-active');
 
                 Object.keys(state.frames).map(k => {
                     state.frames[k].classNames = ['ntm-tab-frame'];
                 });
-                state.frames[key].classNames.push('ntm-frame-active');
+                state.frames[tabId].classNames.push('ntm-frame-active');
 
                 return state;
             });

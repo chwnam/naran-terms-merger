@@ -2,7 +2,7 @@ import React from "react";
 
 function NavTab(props) {
     const
-        stateKey = props.stateKey,
+        tabId = props.tabId,
         {id, classNames} = props.tabData,
         onClickTab = props.onClickTab;
 
@@ -12,7 +12,7 @@ function NavTab(props) {
             href="#"
             className={classNames.join(' ')}
             onClick={() => {
-                onClickTab(stateKey);
+                onClickTab(tabId);
             }}
         >
             {props.children}

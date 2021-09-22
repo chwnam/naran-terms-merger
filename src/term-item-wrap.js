@@ -3,27 +3,21 @@ import React from "react";
 function TermItemWrap(props) {
     const {
         term,
-        current,
         updateTerm
     } = props;
 
-    let wrapClass = 'ntm-item-wrap',
-        spanClass = 'ntm-item-toggle ntm-item-icon',
+    let spanClass = 'ntm-item-toggle ntm-item-icon',
         insideClass = 'ntm-item-inside';
 
-    if (current && current.term_id === term.term_id) {
-        wrapClass += ' current';
-    }
-
     if (term && term.collapsed) {
-        insideClass += ' collapsed';
         spanClass += ' ntm-icon-chevron-up';
+        insideClass += ' collapsed';
     } else {
         spanClass += ' ntm-icon-chevron-down';
     }
 
     return (
-        <li className={wrapClass}>
+        <>
             <div
                 className="ntm-title-wrap"
                 onClick={() => {
@@ -61,7 +55,7 @@ function TermItemWrap(props) {
                     </select>
                 </div>
             </div>
-        </li>
+        </>
     );
 }
 

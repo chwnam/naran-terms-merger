@@ -49,6 +49,11 @@
 .ntm-item-title {
     margin: 0;
     padding: 10px;
+    color: #50575e;
+}
+
+.ntm-item-wrap.current .ntm-item-title {
+    color: #000;
 }
 
 .ntm-item-inside {

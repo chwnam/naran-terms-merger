@@ -1,8 +1,9 @@
 import React from "react";
 import axios from "axios";
-import TermsControls from "./terms-controls";
-import TermsFrameContent from "./terms-frame-content";
+import FrameControls from "./frame-controls";
+import FrameContent from "./frame-content";
 import TermsList from "./terms-list";
+import TaxonomySelector from "./taxonomy-selector";
 
 class Terms extends React.Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class Terms extends React.Component {
 
     updateTaxonomies() {
         axios
-            // TODO: nopaging.
+            // TODO: paging.
             .get('/wp-json/wp/v2/taxonomies')
             .then(response => {
                 let taxonomies = {
@@ -89,25 +90,27 @@ class Terms extends React.Component {
 
     updateTerm(term) {
         term.collapsed = !term.collapsed;
-        this.setState({term:term});
+        this.setState({term: term});
     }
 
     render() {
         return (
             <>
-                <TermsControls
-                    taxonomies={this.state.taxonomies}
-                    updateTaxonomy={this.updateTaxonomy}
-                    taxonomy={this.state.taxonomy}
-                />
-                <TermsFrameContent>
+                <FrameControls>
+                    <TaxonomySelector
+                        taxonomies={this.state.taxonomies}
+                        taxonomy={this.state.taxonomy}
+                        updateTaxonomy={this.updateTaxonomy}
+                    />
+                </FrameControls>
+                <FrameContent>
                     <TermsList
                         taxonomy={this.state.taxonomy}
                         terms={this.state.terms}
                         term={this.state.term}
                         updateTerm={this.updateTerm}
                     />
-                </TermsFrameContent>
+                </FrameContent>
             </>
         )
     }

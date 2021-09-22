@@ -1,17 +1,17 @@
 <?php
 /**
- * Plugin Name: Naran Terms Merger
- * Description:
- * Plugin URI:
- * Author:
- * Author URI:
- * Version:
- * Requires at least:
- * Requires PHP:
- * Text Domain:
- * Domain Path:
- * License:
- * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+ * Plugin Name:       Naran Terms Merger
+ * Description:       Merge multiple terms into a single term.
+ * Plugin URI:        https://github.com/chwnam/naran-terms-merger/
+ * Author:            changwoo
+ * Author URI:        https://blog.changwoo.pe.kr
+ * Version:           0.0.0
+ * Requires at least: 5.5.0
+ * Requires PHP:      7.4
+ * Text Domain:       ntm
+ * Domain Path:       languages
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
