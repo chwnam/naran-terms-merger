@@ -17,7 +17,7 @@ if ( ! trait_exists( 'NTM_Template_Impl' ) ) {
 
 			$located = false;
 
-			foreach( apply_filters( 'ntm_template_paths', $paths ) as $path ) {
+			foreach ( apply_filters( 'ntm_template_paths', $paths ) as $path ) {
 				if ( file_exists( $path ) && is_readable( $path ) ) {
 					$located = $path;
 					break;
@@ -33,7 +33,7 @@ if ( ! trait_exists( 'NTM_Template_Impl' ) ) {
 					extract( $context, EXTR_SKIP );
 				}
 
-                include $located;
+				include $located;
 
 				if ( ! $echo ) {
 					return ob_get_clean();
@@ -41,6 +41,20 @@ if ( ! trait_exists( 'NTM_Template_Impl' ) ) {
 			}
 
 			return '';
+		}
+
+		protected function enqueue_script( string $handle ): self {
+			if ( wp_script_is( $handle, 'registered' ) ) {
+				wp_enqueue_script( $handle );
+			}
+			return $this;
+		}
+
+		protected function enqueue_style( string $handle ): self {
+			if ( wp_style_is( $handle, 'registered' ) ) {
+				wp_enqueue_style( $handle );
+			}
+			return $this;
 		}
 	}
 }

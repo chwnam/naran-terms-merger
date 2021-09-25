@@ -3,13 +3,15 @@ import React from "react";
 function TermItemWrap(props) {
     const {
         term,
-        updateTerm
+        updateTerm,
+        slots,
+        updateDesignation,
     } = props;
 
     let spanClass = 'ntm-item-toggle ntm-item-icon',
         insideClass = 'ntm-item-inside';
 
-    if (term && term.collapsed) {
+    if (term.isCollapsed()) {
         spanClass += ' ntm-icon-chevron-up';
         insideClass += ' collapsed';
     } else {
@@ -21,11 +23,12 @@ function TermItemWrap(props) {
             <div
                 className="ntm-title-wrap"
                 onClick={() => {
+                    term.setCollapsed(!term.isCollapsed());
                     updateTerm(term);
                 }}
             >
                 <h3 className="ntm-item-title">
-                    [#{term.term_id}] {term.name}
+                    [#{term.getTermId()}] {term.getName()}
                 </h3>
                 <div className="ntm-item-control">
                     <span className={spanClass}/>
@@ -34,24 +37,42 @@ function TermItemWrap(props) {
             <div className={insideClass}>
                 <ul className="ntm-term-detail">
                     <li>
-                        {term.description}
+                        {term.getDescription()}
                     </li>
                     <li>
-                        Term ID: {term.term_id}
+                        Term ID: {term.getTermId()}
                     </li>
                     <li>
-                        Slug: {term.slug}
+                        Slug: {term.getSlug()}
                     </li>
                     <li>
-                        Count: {term.count}
+                        Count: {term.getCount()}
                     </li>
                 </ul>
                 <div className="ntm-designate-slot-wrap">
                     <label htmlFor="designated-slot">Designated to</label>:
-                    <select id="designated-slot">
-                        <option defaultValue="slog-1">Slot #1</option>
-                        <option defaultValue="slot-2">Slot #2</option>
-                        <option defaultValue="slot-3">Slot #3</option>
+                    <select
+                        value={term.getSlotId()}
+                        onChange={(e) => {
+                            updateDesignation(e.target.value);
+                        }}
+                    >
+                        <option
+                            value={0}
+                        >
+                            None
+                        </option>
+
+                        {slots.map((slot, idx) => {
+                            return (
+                                <option
+                                    key={slot.getId()}
+                                    value={slot.getId()}
+                                >
+                                    [#{idx + 1}] {slot.getTitle()}
+                                </option>
+                            );
+                        })}
                     </select>
                 </div>
             </div>

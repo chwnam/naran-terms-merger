@@ -36,14 +36,15 @@ if ( ! class_exists( 'NTM_Terms_Merger' ) ) {
 
 		public function enqueue_scripts( string $hook ) {
 			if ( $hook === $this->page_hook ) {
-				wp_enqueue_style( 'ntm-mockup' );
+				$this->enqueue_style( 'ntm-style' );
 			}
 		}
 
 		public function output_admin_menu() {
-			$this->template( 'terms-merger.php' );
-
-			wp_enqueue_script( 'ntm-terms-merger');
+			$this
+				->enqueue_script( 'ntm-terms-merger' )
+				->template( 'terms-merger.php' )
+			;
 		}
 	}
 }

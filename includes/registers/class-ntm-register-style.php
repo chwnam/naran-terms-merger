@@ -35,8 +35,8 @@ if ( ! class_exists( 'NTM_Register_Style' ) ) {
 
 		private function get_admin_items(): Generator {
 			yield new NTM_Registrable_Style(
-				'ntm-mockup',
-				$this->src_helper( 'mockup.css' )
+				'ntm-style',
+				$this->src_helper( 'style.css' )
 			);
 		}
 	}

@@ -5,33 +5,36 @@ function SlotsList(props) {
     const {
         slots,
         slot,
-        updateSlot
+        updateSlot,
+        removeSlot
     } = props;
 
     if (slots.length) {
         return (
             <ul id="ntm-slots">
                 {slots.map((s, i) => {
-                    let className = ['ntm-slot', 'ntm-item-wrap'];
+                    let classNames = ['ntm-slot', 'ntm-item-wrap'];
 
                     if (slot) {
-                        if(slot.getId() === s.getId()) {
-                            className.push('current');
+                        if (slot.getId() === s.getId()) {
+                            classNames.push('current');
                         }
-                        if(s.isCollapsed) {
-                            className.push()
-                        }
+                    }
+
+                    if (s.isCollapsed()) {
+                        classNames.push('collapsed');
                     }
 
                     return (
                         <li
                             key={'slot-' + i}
-                            className={'ntm-slot ntm-item-wrap ' + (slot && slot.getId() === s.getId() ? 'current' : '')}
+                            className={classNames.join(' ')}
                         >
                             <SlotItemWrap
                                 index={i}
                                 slot={s}
                                 updateSlot={updateSlot}
+                                removeSlot={removeSlot}
                             />
                         </li>
                     );

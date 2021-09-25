@@ -6,7 +6,9 @@ function TermsList(props) {
         taxonomy,
         terms,
         term,
-        updateTerm
+        updateTerm,
+        slots,
+        updateDesignation,
     } = props;
 
     if (taxonomy.length && terms && terms.length) {
@@ -15,14 +17,16 @@ function TermsList(props) {
                 {terms.map(t => {
                     return (
                         <li
-                            key={'term-' + t.term_id}
-                            className={'ntm-term ntm-item-wrap ' + (term && t.term_id === term.term_id ? 'current' : '')}
+                            key={'term-' + t.getTermId()}
+                            className={'ntm-term ntm-item-wrap ' + (t.getTermId() === term.getTermId() ? 'current' : '')}
                         >
                             <TermItemWrap
                                 term={t}
                                 current={term}
                                 taxonomy={taxonomy}
                                 updateTerm={updateTerm}
+                                slots={slots}
+                                updateDesignation={updateDesignation}
                             />
                         </li>
                     );

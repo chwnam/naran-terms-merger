@@ -1,7 +1,3 @@
-#naran-terms-merger .collapsed {
-    display: none;
-}
-
 #naran-terms-merger .remove {
     display: inline-block;
     margin-top: 6px;
@@ -62,6 +58,10 @@
     border-top: 1px solid #c3c4c7;
 }
 
+.ntm-item-inside.collapsed {
+    display: none;
+}
+
 .ntm-term-detail {
     padding: 5px 0;
 }
@@ -94,15 +94,20 @@
 .ntm-slot-title-action {
     font-size: 0.80em;
     font-weight: 400;
+    margin-left: 7px;
     display: none;
 }
 
-.ntm-slot.current .ntm-item-title:hover .ntm-slot-title-action {
+.ntm-slot.current:not(.collapsed) .ntm-item-title:hover .ntm-slot-title-action {
     display: unset;
 }
 
 .ntm-slot-tool {
     margin: 5px 0 11px;
+}
+
+.ntm-slot-tool.collapsed {
+    display: none;
 }
 
 .ntm-slot-name-input > *:not(:last-child) {

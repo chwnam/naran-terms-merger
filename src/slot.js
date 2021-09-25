@@ -7,6 +7,8 @@ class Slot {
 
     #collapsed = true;
 
+    #terms = {};
+
     constructor(title) {
         this.setTitle('undefined' === typeof title ? ('Slot #' + Slot.#sequence) : title)
         this.#id = Slot.#sequence;
@@ -30,9 +32,27 @@ class Slot {
         return this.#collapsed;
     }
 
-    toggle() {
-        this.#collapsed = !this.#collapsed;
+    setCollapsed(collapsed) {
+        this.#collapsed = collapsed;
         return this;
+    }
+
+    addTerm(term) {
+        if (!this.#terms.hasOwnProperty(term.getTermId())) {
+            this.#terms[term.getTermId()] = term;
+        }
+        return this;
+    }
+
+    removeTerm(term) {
+        if (this.#terms.hasOwnProperty(term.getTermId())) {
+            delete this.#terms[term.getTermId()];
+        }
+        return this;
+    }
+
+    getTerms() {
+        return this.#terms
     }
 }
 
