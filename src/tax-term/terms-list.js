@@ -1,33 +1,32 @@
 import React from "react";
+import {useSelector} from "react-redux";
+
 import TermItemWrap from "./term-item-wrap";
+
+function getClassNames(a, b) {
+    let classNames = ['ntm-term', 'ntm-item-wrap'];
+
+    if (a.id === b.id) {
+        classNames.push('current');
+    }
+
+    return classNames.join(' ');
+}
 
 function TermsList(props) {
     const {
         taxonomy,
         terms,
         term,
-        updateTerm,
-        slots,
-        updateDesignation,
-    } = props;
+    } = useSelector(state => state.taxSlot);
 
     if (taxonomy.length && terms && terms.length) {
         return (
             <ul id="ntm-terms" className={'taxonomy-' + taxonomy}>
                 {terms.map(t => {
                     return (
-                        <li
-                            key={'term-' + t.getTermId()}
-                            className={'ntm-term ntm-item-wrap ' + (t.getTermId() === term.getTermId() ? 'current' : '')}
-                        >
-                            <TermItemWrap
-                                term={t}
-                                current={term}
-                                taxonomy={taxonomy}
-                                updateTerm={updateTerm}
-                                slots={slots}
-                                updateDesignation={updateDesignation}
-                            />
+                        <li key={'term-' + t.id} className={getClassNames(t, term)}>
+                            <TermItemWrap term={t}/>
                         </li>
                     );
                 })}
@@ -39,7 +38,7 @@ function TermsList(props) {
         if (!taxonomy.length) {
             text = '[Please choose a taxonomy]';
         } else {
-            text = '[Sorry, no items found]';
+            text = '[Sorry, no terms found]';
         }
 
         return (

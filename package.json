@@ -5,11 +5,12 @@
   "version": "",
   "main": "assets/js/build/ntm.js",
   "scripts": {
-    "start": "wp-scripts start src/ntm.js --output-path=assets/js/build",
-    "build": "wp-scripts build src/ntm.js --output-path=assets/js/build"
+    "start": "wp-scripts start src/terms-merger.js --output-path=assets/js/build",
+    "build": "wp-scripts build src/terms-merger.js --output-path=assets/js/build"
   },
   "dependencies": {
-    "axios": "^0.21.4"
+    "@reduxjs/toolkit": "^1.6.2",
+    "react-redux": "^7.2.5"
   },
   "devDependencies": {
     "@wordpress/scripts": "^18.0.1",
