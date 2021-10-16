@@ -28,7 +28,7 @@ if ( ! class_exists( 'NTM_Mockup' ) ) {
 
 		public function enqueue_scripts( string $hook ) {
 			if ( $this->page_hook === $hook ) {
-				wp_enqueue_style( 'ntm-mockup' );
+				wp_enqueue_style( 'ntm-style' );
 				wp_enqueue_script( 'ntm-mockup' );
 			}
 		}

@@ -45,6 +45,10 @@ if ( ! class_exists( 'NTM_Terms_Merger' ) ) {
 				->enqueue_script( 'ntm-terms-merger' )
 				->template( 'terms-merger.php' )
 			;
+
+			if ( in_array( wp_get_environment_type(), [ 'local', 'develop' ], true ) ) {
+				$this->enqueue_script( 'ntm-live-reload' );
+			}
 		}
 	}
 }

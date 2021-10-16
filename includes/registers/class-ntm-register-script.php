@@ -41,9 +41,16 @@ if ( ! class_exists( 'NTM_Register_Script' ) ) {
 
 			yield new NTM_Registrable_Script(
 				'ntm-terms-merger',
-				'build/ntm.js', // JS created by using @wordpress/script.
+				'build/terms-merger.js', // JS created by using @wordpress/script.
 				NTM_Registrable_Script::WP_SCRIPT
 			);
+
+			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+				yield new NTM_Registrable_Script(
+					'ntm-live-reload',
+					'http://localhost:35729/livereload.js',
+				);
+			}
 		}
 	}
 }
