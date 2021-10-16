@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {selectTaxonomy, updateTaxonomies} from "../store/tax-slot-slice";
+import {updateTaxonomies, updateTaxonomy, updateTerms} from "../store/tax-slot-slice";
+import {fetchInitialTaxonomies, newTerm} from "../store/utils";
 
 function TaxonomySelector() {
     const {
@@ -12,71 +13,21 @@ function TaxonomySelector() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetch('/wp-json/wp/v2/taxonomies')
-            .then(r => r.json())
-            .then(taxonomies => {
-                let hierarchical = {},
-                    flat = {};
-
-                Object.values(taxonomies).map(taxonomy => {
-                    if (taxonomy.hierarchical) {
-                        hierarchical[taxonomy.slug] = {
-                            name: taxonomy.name,
-                            href: taxonomy._links['wp:items'][0].href
-                        }
-                    } else {
-                        flat[taxonomy.slug] = {
-                            name: taxonomy.name,
-                            href: taxonomy._links['wp:items'][0].href
-                        }
-                    }
-                });
-
-                dispatch(updateTaxonomies({hierarchical, flat}));
-            });
+        fetchInitialTaxonomies().then(taxonomies => {
+            dispatch(updateTaxonomies(taxonomies));
+        });
     }, []);
 
     return (
         <li>
-            <label htmlFor="taxonomy-selector">Taxonomy</label>:
+            <label htmlFor="taxonomy-selector">Taxonomy</label>
 
             <select
                 id="taxonomy-selector"
                 autoComplete="off"
                 value={taxonomy}
                 onChange={(e) => {
-                    const taxonomy = e.target.value;
-
-                    let url = '';
-
-                    if (hierarchical.hasOwnProperty(taxonomy)) {
-                        url = hierarchical[taxonomy].href;
-                    } else if (flat.hasOwnProperty(taxonomy)) {
-                        url = flat[taxonomy].href;
-                    }
-
-                    if (url.length) {
-                        fetch(url)
-                            .then(r => r.json())
-                            .then(terms => {
-                                dispatch(selectTaxonomy({
-                                    taxonomy: taxonomy,
-                                    terms: terms.map(term => {
-                                        return {
-                                            id: term.id,
-                                            count: term.count,
-                                            description: term.description,
-                                            link: term.link,
-                                            name: term.name,
-                                            slug: term.slug,
-                                            parent: term.parent,
-                                            collapsed: true,
-                                            slotId: 0,
-                                        }
-                                    })
-                                }));
-                            });
-                    }
+                    dispatch(updateTaxonomy({taxonomy: e.target.value}));
                 }}
             >
                 <option disabled="disabled" value="">-- Choose --</option>
@@ -93,6 +44,29 @@ function TaxonomySelector() {
                     })}
                 </optgroup>
             </select>
+
+            <input
+                type="button"
+                className="button button-secondary"
+                value="Load"
+                onClick={() => {
+                    let url = '';
+
+                    if (hierarchical.hasOwnProperty(taxonomy)) {
+                        url = hierarchical[taxonomy].href;
+                    } else if (flat.hasOwnProperty(taxonomy)) {
+                        url = flat[taxonomy].href;
+                    }
+
+                    if (url.length) {
+                        fetch(url)
+                            .then(r => r.json())
+                            .then(terms => {
+                                dispatch(updateTerms({terms: terms.map(term => newTerm(term))}));
+                            });
+                    }
+                }}
+            />
         </li>
     );
 }

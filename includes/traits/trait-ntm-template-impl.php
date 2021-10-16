@@ -50,6 +50,12 @@ if ( ! trait_exists( 'NTM_Template_Impl' ) ) {
 			return $this;
 		}
 
+		protected function localize_script( string $handle, string $object_name, array $l10n = [] ): self {
+			wp_localize_script( $handle, $object_name, $l10n );
+
+			return $this;
+		}
+
 		protected function enqueue_style( string $handle ): self {
 			if ( wp_style_is( $handle, 'registered' ) ) {
 				wp_enqueue_style( $handle );

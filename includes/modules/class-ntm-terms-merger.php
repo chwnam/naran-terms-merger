@@ -43,6 +43,15 @@ if ( ! class_exists( 'NTM_Terms_Merger' ) ) {
 		public function output_admin_menu() {
 			$this
 				->enqueue_script( 'ntm-terms-merger' )
+				->localize_script(
+					'ntm-terms-merger',
+					'ntm',
+					[
+						'restUrl' => get_rest_url(),
+						'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+						'nonce'   => wp_create_nonce( 'naran-terms-merger' ),
+					]
+				)
 				->template( 'terms-merger.php' )
 			;
 

@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {newSlot} from "./utils";
 
 export const taxSlotSlice = createSlice({
     name: 'taxSlot',
@@ -19,16 +20,35 @@ export const taxSlotSlice = createSlice({
         term: {},
 
         // slot's counter.
-        counter: 1,
+        counter: 2,
 
         // All slots list.
-        slots: [],
+        slots: [
+            newSlot(1)
+        ],
 
         // Currently selected slot.
         slot: {},
 
         // Maximum number of slots.
-        maxNumSlots: 10
+        maxNumSlots: 10,
+
+        map: {
+            // Mapping by slots.
+            // Each key is slot id, value is a list of term ids.
+            slotMap: {},
+
+            // Mapping by terms.
+            // Each key is term id, value is slot id.
+            termMap: {},
+
+            // Stored terms.
+            terms: {},
+
+            // Header term info
+            // Each key is slot id, value is term id.
+            headerTerms: {}
+        }
     },
     reducers: {
         // Update taxonomies list.
@@ -38,16 +58,21 @@ export const taxSlotSlice = createSlice({
 
             return state;
         },
-        // Choose selected taxonomy, and fetch taxonomy terms.
-        selectTaxonomy: (state, action) => {
+        // Update selected taxonomy.
+        updateTaxonomy: (state, action) => {
             state.taxonomy = action.payload.taxonomy;
+
+            return state;
+        },
+        // Choose selected taxonomy, and fetch taxonomy terms.
+        updateTerms: (state, action) => {
             state.terms = action.payload.terms;
 
             return state;
         },
         // Select term.
         updateTerm: (state, action) => {
-            let term = state.terms.find(term => term.id === action.payload.id);
+            let term = state.terms.find(term => term.id === action.payload.term.id);
 
             if (term) {
                 term.collapsed = !term.collapsed;
@@ -58,37 +83,46 @@ export const taxSlotSlice = createSlice({
         },
         // Designate a term to slot.
         designateSlot: (state, action) => {
-            const {term, slotId} = action.payload,
-                {slots, terms} = state;
+            const {term, slotId} = action.payload;
+            let map = state.map;
 
-            let oldSlot = slots.find(slot => slot.id === term.slotId);
-            if (oldSlot && oldSlot.terms.hasOwnProperty(term.id)) {
-                delete oldSlot.terms[term.id];
-            }
+            if (term.hasOwnProperty('id')) {
+                const termId = term.id;
 
-            let newSlot = slots.find(slot => slot.id === slotId);
-            if (newSlot) {
-                newSlot.terms[term.id] = term
-            }
+                if (!map.slotMap.hasOwnProperty(slotId)) {
+                    map.slotMap[slotId] = [];
+                }
 
-            let _term = terms.find(t => t.id === term.id);
-            if (_term) {
-                _term.slotId = slotId;
+                // Store term info.
+                if (!map.terms.hasOwnProperty(termId)) {
+                    map.terms[termId] = term;
+                }
+
+                if (map.termMap.hasOwnProperty(termId)) {
+                    const oldSlotId = map.termMap[termId];
+                    const idx = map.slotMap[oldSlotId].indexOf(termId)
+                    if (idx > -1) {
+                        map.slotMap[oldSlotId].splice(idx, 1);
+                    }
+                    if (map.headerTerms.hasOwnProperty(oldSlotId) && map.headerTerms[oldSlotId] === termId) {
+                        map.headerTerms[oldSlotId] = 0;
+                    }
+                }
+
+                map.termMap[term.id] = slotId;
+                map.slotMap[slotId].push(termId);
+
+                // Set header term if the first term is designated.
+                if (1 === map.slotMap[slotId].length) {
+                    map.headerTerms[slotId] = termId;
+                }
             }
 
             return state;
         },
         // Create a new slot.
         addNewSlot: (state) => {
-            state.slots.push({
-                id: state.counter,
-                name: `Slot #${state.counter}`,
-                terms: {},
-                collapsed: true,
-                showNameInput: false,
-            });
-
-            state.counter += 1;
+            state.slots.push(newSlot(state.counter++));
 
             return state;
         },
@@ -133,36 +167,71 @@ export const taxSlotSlice = createSlice({
                 term,
             } = action.payload;
 
-            let _slot = state.slots.find(s => s.id === slot.id),
-                _term = state.terms.find(t => t.id === term.id);
+            let map = state.map;
 
-            if (_slot && _slot.terms.hasOwnProperty(term.id)) {
-                delete _slot.terms[term.id];
+            if (map.termMap.hasOwnProperty(term.id)) {
+                delete map.termMap[term.id];
             }
 
-            if (_term) {
-                _term.slotId = 0;
+            if (map.slotMap.hasOwnProperty(slot.id)) {
+                const idx = map.slotMap[slot.id].indexOf(term.id);
+                if (idx > -1) {
+                    map.slotMap[slot.id].splice(idx, 1);
+                }
+            }
+
+            if (map.terms.hasOwnProperty(term.id)) {
+                delete map.terms[term.id];
+            }
+
+            // Header term.
+            if (map.headerTerms.hasOwnProperty(slot.id) && term.id === map.headerTerms[slot.id]) {
+                if (map.slotMap[slot.id].length) {
+                    map.headerTerms[slot.id] = map.slotMap[slot.id][0];
+                } else {
+                    map.headerTerms[slot.id] = 0;
+                }
             }
 
             return state;
         },
         // Remove a slot from slots list.
         removeSlot: (state, action) => {
-            let {slots, terms} = state;
+            const s = action.payload.slot,
+                {slots, map} = state;
 
-            const slot = action.payload.slot,
-                idx = slots.findIndex(s => s.id === slot.id);
+            let slot = state.slot;
 
+            const idx = slots.findIndex(_s => _s.id === s.id);
             if (idx > -1) {
-                Object.values(slots[idx].terms).map(t => {
-                    let term = terms.find(term => term.id === t.id);
-                    if (term) {
-                        term.slotId = 0;
-                    }
-                });
                 slots.splice(idx, 1);
-                state.slot = {};
             }
+
+            if (s.id === slot.id) {
+                slot = {}
+            }
+
+            if (map.slotMap.hasOwnProperty(slot.id)) {
+                map.slotMap[slot.id].map(termId => {
+                    delete map.terms[termId];
+                    delete map.termMap[termId];
+                });
+                delete map.slotMap[slot.id];
+            }
+
+            if (map.headerTerms.hasOwnProperty(slot.id)) {
+                delete map.headerTerms[slot.id];
+            }
+
+            return state;
+        },
+        updateHeaderTerm: (state, action) => {
+            const {
+                slot,
+                termId
+            } = action.payload;
+
+            state.map.headerTerms[slot.id] = termId;
 
             return state;
         },
@@ -171,7 +240,8 @@ export const taxSlotSlice = createSlice({
 
 export const {
     updateTaxonomies,
-    selectTaxonomy,
+    updateTaxonomy,
+    updateTerms,
     updateTerm,
     designateSlot,
     addNewSlot,
@@ -180,6 +250,7 @@ export const {
     updateSlotName,
     removeTermFromSlot,
     removeSlot,
+    updateHeaderTerm,
 } = taxSlotSlice.actions;
 
 export default taxSlotSlice.reducer;

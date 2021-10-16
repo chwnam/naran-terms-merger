@@ -78,7 +78,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                     <li>Slug: sample-slug</li>
                                 </ul>
                                 <div class="ntm-designate-slot-wrap">
-                                    <label for="designated-slot">Designated to</label>:
+                                    <label for="designated-slot">Designated to</label>
                                     <select id="designated-slot">
                                         <option value="slog-1">Slot #1</option>
                                         <option value="slot-2" selected>Slot #2</option>

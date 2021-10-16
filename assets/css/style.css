@@ -4,6 +4,10 @@
     color: #cb1616;
 }
 
+#naran-terms-merger label {
+    margin-right: 8px;
+}
+
 .ntm-tab-frame {
     display: none;
 }
@@ -165,4 +169,12 @@
 .ntm-no-items > p {
     font-size: 1.8em;
     text-align: center;
+}
+
+#taxonomy-selector {
+    margin-right: 6px;
+}
+
+#header-term {
+    min-width: 100px;
 }

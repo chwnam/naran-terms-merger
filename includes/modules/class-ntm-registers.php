@@ -14,6 +14,7 @@ if ( ! class_exists( 'NTM_Registers' ) ) {
 		public function __construct() {
 			$this->set_modules(
 				[
+					'ajax'   => NTM_Register_AJAX::class,
 					'script' => NTM_Register_Script::class,
 					'style'  => NTM_Register_Style::class,
 				]

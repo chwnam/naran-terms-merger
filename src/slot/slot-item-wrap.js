@@ -1,7 +1,16 @@
 import React from "react";
-import {useDispatch} from "react-redux";
-import {removeSlot, removeTermFromSlot, selectSlot, toggleNameInput, updateSlotName} from "../store/tax-slot-slice";
+import {useDispatch, useSelector} from "react-redux";
+
+import {
+    removeSlot,
+    removeTermFromSlot,
+    selectSlot,
+    toggleNameInput,
+    updateHeaderTerm,
+    updateSlotName
+} from "../store/tax-slot-slice";
 import {insideClasses, spanClasses} from "../nav-frame/class-names";
+import {getTermsFromSlot, isHeaderTerm, requestMergeTerms} from "../store/utils";
 
 function slotToolClassNames(slot) {
     let classNames = ['ntm-slot-tool'];
@@ -15,6 +24,7 @@ function slotToolClassNames(slot) {
 
 function SlotItemWrap(props) {
     const {index, slot} = props,
+        {map} = useSelector(state => state.taxSlot),
         dispatch = useDispatch();
 
     return (
@@ -71,13 +81,15 @@ function SlotItemWrap(props) {
                     <hr/>
                 </div>
                 <div className="ntm-slot-item">
-                    <h4>Assigned terms</h4>
+                    <h4>
+                        Assigned term(s)
+                    </h4>
                     <ul className="ntm-slot-assigned-terms">
-                        {Object.values(slot.terms).map(term => {
+                        {getTermsFromSlot(map, slot.id).map(term => {
                             return (
                                 <li
                                     key={term.id}
-                                    className="header-term"
+                                    className={isHeaderTerm(map, slot.id, term.id) ? "header-term" : ""}
                                     title={"Term ID: " + term.id}
                                 >
                                     {term.name}
@@ -101,19 +113,35 @@ function SlotItemWrap(props) {
                     <ul className="ntm-slot-actions">
                         <li>
                             <label htmlFor="header-term">Header term</label>
-                            <select>
-                                {Object.values(slot.terms).map(term => {
-                                    return (
-                                        <option key={term.id} value={term.id}>
-                                            {term.name}
-                                        </option>
-                                    );
-                                })}
+                            <select
+                                id="header-term"
+                                onChange={(e) => {
+                                    dispatch(updateHeaderTerm({
+                                        slot: slot,
+                                        termId: parseInt(e.target.value)
+                                    }));
+                                }}>
+                                {getTermsFromSlot(map, slot.id).map(term =>
+                                    <option key={term.id} value={term.id}>{term.name} </option>
+                                )}
                             </select>
                         </li>
                         <li>
-                            <button type="button"
-                                    className="button button-primary">Merge Terms
+                            <button
+                                type="button"
+                                className="button button-primary"
+                                disabled={getTermsFromSlot(map, slot.id).length < 2}
+                                onClick={(e) => {
+                                    if (!confirm(`Merge ${slot.name}. Proceed?`)) {
+                                        e.preventDefault();
+                                        return;
+                                    }
+                                    const termIds = map.slotMap[slot.id];
+                                    const headerTerm = map.headerTerms[slot.id];
+
+                                    requestMergeTerms(termIds, headerTerm);
+                                }}
+                            >Merge Terms
                             </button>
                         </li>
                         <li>
@@ -122,7 +150,7 @@ function SlotItemWrap(props) {
                                className="remove"
                                onClick={(e) => {
                                    e.preventDefault();
-                                   if (!confirm('Are you sure you want to remove this slot?')) {
+                                   if (getTermsFromSlot(map, slot.id).length && !confirm('Are you sure you want to remove this slot?')) {
                                        return;
                                    }
                                    dispatch(removeSlot({slot: slot}));

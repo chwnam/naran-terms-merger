@@ -2,10 +2,11 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {designateSlot, updateTerm} from "../store/tax-slot-slice";
 import {insideClasses, spanClasses} from "../nav-frame/class-names";
+import {getSlotIdByTermId} from "../store/utils";
 
 function TermItemWrap(props) {
     const {term} = props,
-        {slots} = useSelector(state => state.taxSlot),
+        {slots, map} = useSelector(state => state.taxSlot),
         dispatch = useDispatch();
 
     return (
@@ -13,7 +14,7 @@ function TermItemWrap(props) {
             <div
                 className="ntm-title-wrap"
                 onClick={() => {
-                    dispatch(updateTerm(term));
+                    dispatch(updateTerm({term: term}));
                 }}
             >
                 <h3 className="ntm-item-title">
@@ -39,10 +40,10 @@ function TermItemWrap(props) {
                     </li>
                 </ul>
                 <div className="ntm-designate-slot-wrap">
-                    <label htmlFor="designated-slot">Designated to</label>:
+                    <label htmlFor="designated-slot">Designated to</label>
 
                     <select
-                        value={term.slotId}
+                        value={getSlotIdByTermId(map, term.id)}
                         onChange={(e) => {
                             dispatch(designateSlot({
                                 term: term,

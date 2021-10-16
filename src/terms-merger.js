@@ -14,7 +14,7 @@ import SlotsList from "./slot/slots-list";
 import TermsList from "./tax-term/terms-list";
 import TaxonomySelector from "./tax-term/taxonomy-selector";
 
-function TermsMerger(props) {
+function TermsMerger() {
     return <>
         <NavWrap>
             <NavTab target="terms">Terms</NavTab>
