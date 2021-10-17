@@ -235,6 +235,33 @@ export const taxSlotSlice = createSlice({
 
             return state;
         },
+        // After successful term merging.
+        afterMerge: (state, action) => {
+            const slot = action.payload.slot,
+                map = state.map,
+                headerTermId = map.headerTerms[slot.id];
+
+            map.slotMap[slot.id].map(termId => {
+                if (termId !== headerTermId) {
+                    if (map.terms.hasOwnProperty(termId)) {
+                        delete map.terms[termId];
+                    }
+                    if (map.termMap.hasOwnProperty(termId)) {
+                        delete map.termMap[termId];
+                    }
+                } else {
+                    map.termMap[termId] = 0;
+                }
+            });
+
+            // Remove slot.
+            map.slotMap[slot.id] = [];
+
+            // Remove headerTerm
+            map.headerTerms[slot.id] = 0;
+
+            return state;
+        }
     }
 });
 
@@ -251,6 +278,7 @@ export const {
     removeTermFromSlot,
     removeSlot,
     updateHeaderTerm,
+    afterMerge,
 } = taxSlotSlice.actions;
 
 export default taxSlotSlice.reducer;

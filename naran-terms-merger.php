@@ -28,7 +28,6 @@ const NTM_PRIORITY = 280;
 ntm();
 
 
-// TODO: 5   merge term 구현.
 // TODO: 10  terms pagination 구현.
 // TODO: 50  키보드 단축키로 사용 가능하게.
 // TODO: 100 텀/슬롯 툴바에 모두 열기/접기 구현.

@@ -59,5 +59,70 @@ if ( ! class_exists( 'NTM_Terms_Merger' ) ) {
 				$this->enqueue_script( 'ntm-live-reload' );
 			}
 		}
+
+		public function merge_terms() {
+			check_ajax_referer( 'naran-terms-merger', 'nonce' );
+
+			if ( ! current_user_can( 'administrator' ) ) {
+				wp_die( 'You are not allowed to do this action.' );
+			}
+
+			$term_ids    = array_filter( array_map( 'absint', $_REQUEST['term_id'] ?? [] ) );
+			$header_term = absint( $_REQUEST['header_term'] ?? '0' );
+			$errors      = new WP_Error();
+
+			if ( count( $term_ids ) < 2 ) {
+				$errors->add( 'error', '\'term_id\' must contain at least 2 term ids.' );
+			} elseif ( ! in_array( $header_term, $term_ids ) ) {
+				$errors->add( 'error', '\'header_term\' value must be found in \'term_id\' array.' );
+			}
+
+			$terms = ( new WP_Term_Query(
+				[
+					'include'    => $term_ids,
+					'hide_empty' => false,
+				]
+			) )->get_terms();
+
+			if ( count( $terms ) !== count( $term_ids ) ) {
+				$errors->add( 'error', 'Invalid value in \'term_id\'.' );
+			}
+
+			if ( $errors->has_errors() ) {
+				wp_send_json_error( $errors );
+			}
+
+			// change object ids.
+			global $wpdb;
+
+			$header_tt    = - 1;
+			$header_tax   = '';
+			$merged_tt    = [];
+			$placeholders = implode( ', ', array_pad( [], count( $terms ) - 1, '%d' ) );
+			$query        = "UPDATE {$wpdb->term_relationships} " .
+			                "SET term_taxonomy_id=%d WHERE term_taxonomy_id IN ({$placeholders})";
+
+			foreach ( $terms as $term ) {
+				if ( $term->term_id === $header_term ) {
+					$header_tt  = $term->term_taxonomy_id;
+					$header_tax = $term->taxonomy;
+				} else {
+					$merged_tt[] = $term->term_taxonomy_id;
+				}
+			}
+
+			$wpdb->get_results( $wpdb->prepare( $query, array_merge( [ $header_tt ], $merged_tt ) ) );
+
+			foreach ( $terms as $term ) {
+				if ( $term->term_id !== $header_term ) {
+					wp_delete_term( $term->term_id, $term->taxonomy );
+				}
+			}
+			// Re-count term.
+			wp_update_term_count( $header_term, $header_tax );
+
+			// Finish.
+			wp_send_json_success();
+		}
 	}
 }

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {updateTaxonomies, updateTaxonomy, updateTerms} from "../store/tax-slot-slice";
-import {fetchInitialTaxonomies, newTerm} from "../store/utils";
+import {fetchInitialTaxonomies, getTaxonomyTerms} from "../store/utils";
 
 function TaxonomySelector() {
     const {
@@ -50,21 +50,9 @@ function TaxonomySelector() {
                 className="button button-secondary"
                 value="Load"
                 onClick={() => {
-                    let url = '';
-
-                    if (hierarchical.hasOwnProperty(taxonomy)) {
-                        url = hierarchical[taxonomy].href;
-                    } else if (flat.hasOwnProperty(taxonomy)) {
-                        url = flat[taxonomy].href;
-                    }
-
-                    if (url.length) {
-                        fetch(url)
-                            .then(r => r.json())
-                            .then(terms => {
-                                dispatch(updateTerms({terms: terms.map(term => newTerm(term))}));
-                            });
-                    }
+                    getTaxonomyTerms(hierarchical, flat, taxonomy).then(terms => {
+                        dispatch(updateTerms({terms: terms}));
+                    });
                 }}
             />
         </li>

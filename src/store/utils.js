@@ -42,7 +42,27 @@ async function fetchInitialTaxonomies() {
     }
 }
 
-function requestMergeTerms(termIds, headerTerm) {
+async function getTaxonomyTerms(hierarchical, flat, taxonomy) {
+    let url = '';
+
+    if (hierarchical.hasOwnProperty(taxonomy)) {
+        url = hierarchical[taxonomy].href;
+    } else if (flat.hasOwnProperty(taxonomy)) {
+        url = flat[taxonomy].href;
+    }
+
+    if (url.length) {
+        const response = await (
+            await fetch(url)
+        ).json();
+
+        if (response) {
+            return response.map(term => newTerm(term));
+        }
+    }
+}
+
+async function requestMergeTerms(termIds, headerTerm) {
     let formData = new FormData();
 
     formData.append('action', 'ntm_request_merge_term');
@@ -55,12 +75,13 @@ function requestMergeTerms(termIds, headerTerm) {
 
     formData.append('header_term', headerTerm);
 
-    fetch(ajaxUrl, {
-        method: 'POST',
-        body: formData,
-    });
+    return await (
+        await fetch(ajaxUrl, {
+            method: 'POST',
+            body: formData,
+        })
+    ).json();
 }
-
 
 function newTerm(term) {
     return {
@@ -106,6 +127,7 @@ function isHeaderTerm(map, slotId, termId,) {
 
 export {
     fetchInitialTaxonomies,
+    getTaxonomyTerms,
     requestMergeTerms,
     newTerm,
     newSlot,
