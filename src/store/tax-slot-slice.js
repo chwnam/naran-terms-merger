@@ -19,6 +19,24 @@ export const taxSlotSlice = createSlice({
         // Currently selected term.
         term: {},
 
+        // Term order by
+        termsOrderBy: 'name-asc',
+
+        // Terms per page.
+        termsPerPage: 10,
+
+        // Max terms per page.
+        termsPerPageMax: 100,
+
+        // Terms current page.
+        termsCurrentPage: 0,
+
+        // Terms last page.
+        termsLastPage: 0,
+
+        // Total terms.
+        termsTotal: 0,
+
         // slot's counter.
         counter: 2,
 
@@ -48,7 +66,7 @@ export const taxSlotSlice = createSlice({
             // Header term info
             // Each key is slot id, value is term id.
             headerTerms: {}
-        }
+        },
     },
     reducers: {
         // Update taxonomies list.
@@ -61,12 +79,30 @@ export const taxSlotSlice = createSlice({
         // Update selected taxonomy.
         updateTaxonomy: (state, action) => {
             state.taxonomy = action.payload.taxonomy;
+            state.terms = [];
+            state.termsCurrentPage = 0;
+            state.termsLastPage = 0;
+            state.termsTotal = 0;
 
             return state;
         },
         // Choose selected taxonomy, and fetch taxonomy terms.
         updateTerms: (state, action) => {
-            state.terms = action.payload.terms;
+            const {
+                termsTotal,
+                termsLastPage,
+                terms,
+            } = action.payload;
+
+            state.terms = terms;
+            state.termsTotal = termsTotal;
+            state.termsLastPage = termsLastPage;
+
+            if (terms.length) {
+                state.termsCurrentPage = Math.max(1, state.termsCurrentPage)
+            } else {
+                state.termsCurrentPage = 0;
+            }
 
             return state;
         },
@@ -78,6 +114,21 @@ export const taxSlotSlice = createSlice({
                 term.collapsed = !term.collapsed;
                 state.term = term;
             }
+
+            return state;
+        },
+        updateTermsOrderBy: (state, action) => {
+            state.termsOrderBy = action.payload;
+
+            return state;
+        },
+        updateTermsPerPage: (state, action) => {
+            state.termsPerPage = action.payload;
+
+            return state;
+        },
+        updateTermsCurrentPage: (state, action) => {
+            state.termsCurrentPage = parseInt(action.payload);
 
             return state;
         },
@@ -270,6 +321,9 @@ export const {
     updateTaxonomy,
     updateTerms,
     updateTerm,
+    updateTermsOrderBy,
+    updateTermsPerPage,
+    updateTermsCurrentPage,
     designateSlot,
     addNewSlot,
     selectSlot,

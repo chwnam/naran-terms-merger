@@ -12,18 +12,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <div id="naran-terms-merger">
         <nav class="nav-tab-wrapper wp-clearfix" aria-label="Secondary Menu">
-            <a id="ntm-tab-terms" href="javascript: void(0);" class="nav-tab "
+            <a id="ntm-tab-terms" href="javascript: void(0);" class="nav-tab nav-tab-active"
                data-target-frame="ntm-frame-terms"
                aria-current="page">Terms</a>
-            <a id="ntm-tab-slots" href="javascript: void(0);" class="nav-tab nav-tab-active"
+            <a id="ntm-tab-slots" href="javascript: void(0);" class="nav-tab"
                data-target-frame="ntm-frame-slots">Slots</a>
         </nav>
 
         <div class="ntm-tab-frame-wrap">
-            <div id="ntm-frame-terms" class="ntm-tab-frame ">
+            <div id="ntm-frame-terms" class="ntm-tab-frame ntm-frame-active">
                 <ul class="ntm-frame-controls">
                     <li>
-                        <label for="taxonomy-selector">Taxonomy</label>:
+                        <label for="taxonomy-selector">Taxonomy</label>
                         <select id="taxonomy-selector" autocomplete="off">
                             <optgroup label="Hierarchical">
                                 <option value="category">Category</option>
@@ -32,7 +32,59 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 <option value="post_tag">Tag</option>
                             </optgroup>
                         </select>
-                        <button type="button" class="button">Load</button>
+
+                        <span class="control-separator">|</span>
+
+                        <label for="terms-orderby">Order</label>
+                        <select id="terms-orderby">
+                            <option value="name-asc">Term Name Asc.</option>
+                            <option value="name-desc">Term Name Desc.</option>
+                            <option value="id-desc">Term ID DESC.</option>
+                            <option value="id-desc">Term ID DESC.</option>
+                        </select>
+
+                        <span class="control-separator">|</span>
+
+                        <label for="terms-per-page">Per Page</label>
+                        <input id="terms-per-page"
+                               type="number"
+                               class="text short-input"
+                               value="10"
+                               min="10"
+                               max="100"
+                               step="10">
+
+                        <button id="load-terms" type="button" class="button">Load</button>
+                    </li>
+
+                    <li>
+                        <div class="pagination">
+                            <span class="total-items">Total 100 items,</span>
+
+                            <button type="button"
+                                    class="button">&laquo;
+                            </button>
+
+                            <button type="button"
+                                    class="button">&lt;
+                            </button>
+
+                            <label for="pagination-number" class="screen-reader-text">Pagination number</label>
+                            <input type="number"
+                                   class="input short-input"
+                                   id="pagination-number"
+                                   value="1"
+                                   min="1"
+                                   max="10"> / <span class="max-page">10</span>
+
+                            <button type="button"
+                                    class="button">&gt;
+                            </button>
+
+                            <button type="button"
+                                    class="button">&raquo;
+                            </button>
+                        </div>
                     </li>
                 </ul>
 
@@ -53,7 +105,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                     <li>Slug: sample-slug</li>
                                 </ul>
                                 <div class="ntm-designate-slot-wrap">
-                                    <label for="designated-slot">Designated to</label>:
+                                    <label for="designated-slot">Designated to</label>
                                     <select id="designated-slot">
                                         <option value="slog-1">Slot #1</option>
                                         <option value="slot-2" selected>Slot #2</option>
@@ -95,7 +147,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
             </div>
 
-            <div id="ntm-frame-slots" class="ntm-tab-frame ntm-frame-active">
+            <div id="ntm-frame-slots" class="ntm-tab-frame ">
                 <ul class="ntm-frame-controls">
                     <li>
                         <button type="button" class="button">Add new slot</button>

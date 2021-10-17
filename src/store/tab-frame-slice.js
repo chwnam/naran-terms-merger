@@ -6,21 +6,21 @@ export const tabFrameSlice = createSlice({
         tabs: {
             terms: {
                 id: 'ntm-tab-terms',
-                classNames: ['nav-tab'],
+                classNames: ['nav-tab', 'nav-tab-active'],
             },
             slots: {
                 id: 'ntm-tab-slots',
-                classNames: ['nav-tab', 'nav-tab-active'],
+                classNames: ['nav-tab'],
             }
         },
         frames: {
             terms: {
                 id: 'ntm-frame-terms',
-                classNames: ['ntm-tab-frame']
+                classNames: ['ntm-tab-frame', 'ntm-frame-active']
             },
             slots: {
                 id: 'ntm-frame-slots',
-                classNames: ['ntm-tab-frame', 'ntm-frame-active']
+                classNames: ['ntm-tab-frame']
             }
         },
     },

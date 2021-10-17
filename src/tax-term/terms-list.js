@@ -13,7 +13,7 @@ function getClassNames(a, b) {
     return classNames.join(' ');
 }
 
-function TermsList(props) {
+function TermsList() {
     const {
         taxonomy,
         terms,
@@ -36,9 +36,9 @@ function TermsList(props) {
         let text;
 
         if (!taxonomy.length) {
-            text = '[Please choose a taxonomy]';
+            text = '[Please choose a taxonomy.]';
         } else {
-            text = '[Sorry, no terms found]';
+            text = '[No terms found. You may need to click load button.]';
         }
 
         return (

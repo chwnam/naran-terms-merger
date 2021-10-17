@@ -42,7 +42,16 @@ async function fetchInitialTaxonomies() {
     }
 }
 
-async function getTaxonomyTerms(hierarchical, flat, taxonomy) {
+async function getTaxonomyTerms(props) {
+    const {
+        hierarchical,
+        flat,
+        taxonomy,
+        orderby,
+        perPage,
+        page,
+    } = props;
+
     let url = '';
 
     if (hierarchical.hasOwnProperty(taxonomy)) {
@@ -52,12 +61,34 @@ async function getTaxonomyTerms(hierarchical, flat, taxonomy) {
     }
 
     if (url.length) {
-        const response = await (
-            await fetch(url)
-        ).json();
+        let orders = orderby.split('-');
 
-        if (response) {
-            return response.map(term => newTerm(term));
+        url += '?page=' + (Math.max(page, 1)) +
+            '&per_page=' + perPage +
+            '&orderby=' + orders[0] +
+            '&order=' + orders[1];
+
+        const response = await fetch(url);
+        const headers = await response.headers;
+        const data = await response.json();
+
+        if (headers && data) {
+            let termsTotal = 0,
+                termsLastPage = 0;
+
+            if (headers.has('X-WP-Total')) {
+                termsTotal = parseInt(headers.get('X-WP-Total'));
+            }
+
+            if (headers.get('X-WP-TotalPages')) {
+                termsLastPage = parseInt(headers.get('X-WP-TotalPages'));
+            }
+
+            return {
+                termsTotal,
+                termsLastPage,
+                terms: data.map(term => newTerm(term))
+            };
         }
     }
 }

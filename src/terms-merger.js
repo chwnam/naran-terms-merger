@@ -11,8 +11,9 @@ import NavWrap from './nav-frame/nav-wrap';
 import NavTab from './nav-frame/nav-tab';
 import SlotAdder from "./slot/slot-adder";
 import SlotsList from "./slot/slots-list";
-import TermsList from "./tax-term/terms-list";
 import TaxonomySelector from "./tax-term/taxonomy-selector";
+import TermsList from "./tax-term/terms-list";
+import TermPaginator from "./tax-term/term-paginator";
 
 function TermsMerger() {
     return <>
@@ -24,6 +25,7 @@ function TermsMerger() {
             <Frame target="terms">
                 <FrameControls>
                     <TaxonomySelector/>
+                    <TermPaginator/>
                 </FrameControls>
                 <FrameContent>
                     <TermsList/>

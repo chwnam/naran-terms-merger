@@ -23,7 +23,39 @@
 }
 
 .ntm-frame-controls > li {
+    flex-grow: 1;
+}
+
+.ntm-frame-controls > li:not(:last-of-type) {
     margin-right: 20px;
+}
+
+.ntm-frame-controls .pagination {
+    float: right;
+}
+
+.ntm-frame-controls .pagination:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.ntm-frame-controls .pagination > .total-items {
+    margin-right: 8px;
+}
+
+.ntm-frame-controls .pagination > button {
+    margin-left: 3px;
+}
+
+.ntm-frame-controls .pagination > input, .max-page {
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.ntm-frame-controls .control-separator {
+    margin: 0 8px 0 6px;
+    color: #acacac;
 }
 
 .short-input {
@@ -177,4 +209,8 @@
 
 #header-term {
     min-width: 100px;
+}
+
+#load-terms {
+    margin-left: 12px;
 }
