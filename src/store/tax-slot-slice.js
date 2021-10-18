@@ -25,9 +25,6 @@ export const taxSlotSlice = createSlice({
         // Terms per page.
         termsPerPage: 10,
 
-        // Max terms per page.
-        termsPerPageMax: 100,
-
         // Terms current page.
         termsCurrentPage: 0,
 

@@ -9,7 +9,7 @@ import {
     updateTermsPerPage,
 } from "../store/tax-slot-slice";
 
-import {fetchInitialTaxonomies, getTaxonomyTerms} from "../store/utils";
+import {fetchInitialTaxonomies, getTaxonomyTerms, getTermsListUrl} from "../store/utils";
 
 function TaxonomySelector() {
     const {
@@ -17,12 +17,25 @@ function TaxonomySelector() {
         flat,
         termsOrderBy,
         termsPerPage,
-        termsPerPageMax,
         termsCurrentPage,
         taxonomy
     } = useSelector(state => state.taxSlot);
 
     const dispatch = useDispatch();
+
+    const $ = jQuery;
+
+    const update = function (url, args = {}) {
+        args = $.extend({
+            orderBy: termsOrderBy,
+            perPage: termsPerPage,
+            page: termsCurrentPage,
+        }, args);
+
+        getTaxonomyTerms(url, args).then(response => {
+            dispatch(updateTerms(response));
+        })
+    };
 
     useEffect(() => {
         fetchInitialTaxonomies().then(taxonomies => {
@@ -39,7 +52,9 @@ function TaxonomySelector() {
                 autoComplete="off"
                 value={taxonomy}
                 onChange={(e) => {
-                    dispatch(updateTaxonomy({taxonomy: e.target.value}));
+                    const newTaxonomy = e.target.value;
+                    dispatch(updateTaxonomy({taxonomy: newTaxonomy}));
+                    update(getTermsListUrl(hierarchical, flat, newTaxonomy), {taxonomy: newTaxonomy});
                 }}
             >
                 <option disabled="disabled" value="">-- Choose --</option>
@@ -65,7 +80,9 @@ function TaxonomySelector() {
                 autoComplete="off"
                 value={termsOrderBy}
                 onChange={(e) => {
-                    dispatch(updateTermsOrderBy(e.target.value));
+                    const newTermsOrder = e.target.value;
+                    dispatch(updateTermsOrderBy(newTermsOrder));
+                    update(getTermsListUrl(hierarchical, flat, taxonomy), {orderBy: newTermsOrder})
                 }}
             >
                 <option value="name-asc">Name Asc.</option>
@@ -77,39 +94,21 @@ function TaxonomySelector() {
             <span className="control-separator">|</span>
 
             <label htmlFor="terms-per-page">Per Page</label>
-            <input
+            <select
                 id="terms-per-page"
-                type="number"
-                className="text short-input"
                 value={termsPerPage}
-                min="10"
-                max={termsPerPageMax}
-                step="10"
                 onChange={e => {
-                    dispatch(updateTermsPerPage(parseInt(e.target.value)));
+                    const newPerPage = parseInt(e.target.value);
+                    dispatch(updateTermsPerPage(newPerPage));
+                    update(getTermsListUrl(hierarchical, flat, taxonomy), {perPage: newPerPage});
                 }}
-            />
-
-            <span className="control-separator">|</span>
-
-            <input
-                type="button"
-                className="button button-secondary"
-                value="Load"
-                onClick={() => {
-                    getTaxonomyTerms({
-                            hierarchical,
-                            flat,
-                            taxonomy,
-                            orderby: termsOrderBy,
-                            perPage: termsPerPage,
-                            page: termsCurrentPage
-                        }
-                    ).then(response => {
-                        dispatch(updateTerms(response));
-                    });
-                }}
-            />
+            >
+                <option value={10}>10</option>
+                <option value={30}>30</option>
+                <option value={50}>50</option>
+                <option value={70}>70</option>
+                <option value={100}>100</option>
+            </select>
         </li>
     );
 }

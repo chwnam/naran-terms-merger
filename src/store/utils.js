@@ -12,6 +12,18 @@ function getEndpoint(endpoint) {
     return restUrl + 'wp/v2/' + endpoint;
 }
 
+function getTermsListUrl(hierarchical, flat, taxonomy) {
+    let url = '';
+
+    if (hierarchical.hasOwnProperty(taxonomy)) {
+        url = hierarchical[taxonomy].href;
+    } else if (flat.hasOwnProperty(taxonomy)) {
+        url = flat[taxonomy].href;
+    }
+
+    return url;
+}
+
 async function fetchInitialTaxonomies() {
     const taxonomies = await (
         await fetch(getEndpoint('taxonomies'))
@@ -42,26 +54,15 @@ async function fetchInitialTaxonomies() {
     }
 }
 
-async function getTaxonomyTerms(props) {
+async function getTaxonomyTerms(url, props) {
     const {
-        hierarchical,
-        flat,
-        taxonomy,
-        orderby,
+        orderBy,
         perPage,
         page,
     } = props;
 
-    let url = '';
-
-    if (hierarchical.hasOwnProperty(taxonomy)) {
-        url = hierarchical[taxonomy].href;
-    } else if (flat.hasOwnProperty(taxonomy)) {
-        url = flat[taxonomy].href;
-    }
-
     if (url.length) {
-        let orders = orderby.split('-');
+        let orders = orderBy.split('-');
 
         url += '?page=' + (Math.max(page, 1)) +
             '&per_page=' + perPage +
@@ -157,6 +158,7 @@ function isHeaderTerm(map, slotId, termId,) {
 }
 
 export {
+    getTermsListUrl,
     fetchInitialTaxonomies,
     getTaxonomyTerms,
     requestMergeTerms,

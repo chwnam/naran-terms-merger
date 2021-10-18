@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getTaxonomyTerms} from "../store/utils";
+import {getTaxonomyTerms, getTermsListUrl} from "../store/utils";
 import {updateTerms, updateTermsCurrentPage} from "../store/tax-slot-slice";
 
 function TermPaginator() {
@@ -17,14 +17,14 @@ function TermPaginator() {
 
     const dispatch = useDispatch();
 
+    const termsListUrl = getTermsListUrl(hierarchical, flat, taxonomy);
+
     const update = function (page) {
         if (0 <= page && page <= termsLastPage) {
             dispatch(updateTermsCurrentPage(page));
-            getTaxonomyTerms({
-                hierarchical,
-                flat,
-                taxonomy,
-                orderby: termsOrderBy,
+
+            getTaxonomyTerms(termsListUrl, {
+                orderBy: termsOrderBy,
                 perPage: termsPerPage,
                 page
             }).then(response => {
