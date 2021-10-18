@@ -277,16 +277,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 </div>
                                 <div class="ntm-slot-item">
                                     <h4>Assigned terms</h4>
-                                    <ul class="ntm-slot-assigned-terms">
-                                        <li class="header-term" title="Term ID: 414">
-                                            Term one
-                                            <span class="remove-term">&times;</span>
-                                        </li>
-                                        <li title="Term ID: 418">
-                                            Term two
-                                            <span class="remove-term">&times;</span>
-                                        </li>
-                                    </ul>
+                                    <p class="ntm-slot-assigned-terms no-assigned-terms">No assigned Terms</p>
                                 </div>
                                 <hr>
                                 <div class="ntm-slot-item">
