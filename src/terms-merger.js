@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {Provider} from 'react-redux';
+import {Provider, useDispatch} from 'react-redux';
 
 import store from "./store/store";
+import ExpandCollapse from "./nav-frame/expand-collapse";
 import Frame from './nav-frame/frame';
 import FrameContent from "./nav-frame/frame-content";
 import FrameControls from "./nav-frame/frame-controls";
@@ -14,8 +15,11 @@ import SlotsList from "./slot/slots-list";
 import TaxonomySelector from "./tax-term/taxonomy-selector";
 import TermsList from "./tax-term/terms-list";
 import TermPaginator from "./tax-term/term-paginator";
+import {collapseAllSlots, collapseAllTerms, expandAllSlots, expandAllTerms,} from './store/tax-slot-slice';
 
 function TermsMerger() {
+    const dispatch = useDispatch();
+
     return <>
         <NavWrap>
             <NavTab target="terms">Terms</NavTab>
@@ -25,6 +29,14 @@ function TermsMerger() {
             <Frame target="terms">
                 <FrameControls>
                     <TaxonomySelector/>
+                    <ExpandCollapse
+                        onExpandAll={() => {
+                            dispatch(expandAllTerms());
+                        }}
+                        onCollapseAll={() => {
+                            dispatch(collapseAllTerms());
+                        }}
+                    />
                     <TermPaginator/>
                 </FrameControls>
                 <FrameContent>
@@ -34,6 +46,14 @@ function TermsMerger() {
             <Frame target="slots">
                 <FrameControls>
                     <SlotAdder/>
+                    <ExpandCollapse
+                        onExpandAll={() => {
+                            dispatch(expandAllSlots());
+                        }}
+                        onCollapseAll={() => {
+                            dispatch(collapseAllSlots());
+                        }}
+                    />
                 </FrameControls>
                 <FrameContent>
                     <SlotsList/>

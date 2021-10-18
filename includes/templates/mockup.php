@@ -23,38 +23,48 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div id="ntm-frame-terms" class="ntm-tab-frame ntm-frame-active">
                 <ul class="ntm-frame-controls">
                     <li>
-                        <label for="taxonomy-selector">Taxonomy</label>
-                        <select id="taxonomy-selector" autocomplete="off">
-                            <optgroup label="Hierarchical">
-                                <option value="category">Category</option>
-                            </optgroup>
-                            <optgroup label="Flat">
-                                <option value="post_tag">Tag</option>
-                            </optgroup>
-                        </select>
+                        <div class="terms-controls">
+                            <label for="taxonomy-selector">Taxonomy</label>
+                            <select id="taxonomy-selector" autocomplete="off">
+                                <optgroup label="Hierarchical">
+                                    <option value="category">Category</option>
+                                </optgroup>
+                                <optgroup label="Flat">
+                                    <option value="post_tag">Tag</option>
+                                </optgroup>
+                            </select>
 
-                        <span class="control-separator">|</span>
+                            <span class="control-separator">|</span>
 
-                        <label for="terms-orderby">Order</label>
-                        <select id="terms-orderby">
-                            <option value="name-asc">Term Name Asc.</option>
-                            <option value="name-desc">Term Name Desc.</option>
-                            <option value="id-desc">Term ID DESC.</option>
-                            <option value="id-desc">Term ID DESC.</option>
-                        </select>
+                            <label for="terms-orderby">Order</label>
+                            <select id="terms-orderby">
+                                <option value="name-asc">Term Name Asc.</option>
+                                <option value="name-desc">Term Name Desc.</option>
+                                <option value="id-desc">Term ID DESC.</option>
+                                <option value="id-desc">Term ID DESC.</option>
+                            </select>
 
-                        <span class="control-separator">|</span>
+                            <span class="control-separator">|</span>
 
-                        <label for="terms-per-page">Per Page</label>
-                        <input id="terms-per-page"
-                               type="number"
-                               class="text short-input"
-                               value="10"
-                               min="10"
-                               max="100"
-                               step="10">
+                            <label for="terms-per-page">Per Page</label>
+                            <input id="terms-per-page"
+                                   type="number"
+                                   class="text short-input"
+                                   value="10"
+                                   min="10"
+                                   max="100"
+                                   step="10">
+                        </div>
+                    </li>
 
-                        <button id="load-terms" type="button" class="button">Load</button>
+                    <li>
+                        <div class="expand-collapse">
+                            <a href="javascript: void(0);">Expand All</a>
+
+                            <span class="control-separator">|</span>
+
+                            <a href="javascript: void(0);">Collapse All</a>
+                        </div>
                     </li>
 
                     <li>
@@ -151,6 +161,15 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <ul class="ntm-frame-controls">
                     <li>
                         <button type="button" class="button">Add new slot</button>
+                    </li>
+                    <li>
+                        <div class="expand-collapse">
+                            <a href="javascript: void(0);">Expand All</a>
+
+                            <span class="control-separator">|</span>
+
+                            <a href="javascript: void(0);">Collapse All</a>
+                        </div>
                     </li>
                 </ul>
 

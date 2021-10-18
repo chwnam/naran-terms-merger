@@ -4,15 +4,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     afterMerge,
     removeSlot,
-    removeTermFromSlot,
     selectSlot,
     toggleNameInput,
     updateHeaderTerm,
     updateSlotName,
     updateTerms,
 } from "../store/tax-slot-slice";
+import AssignedTerms from "../tax-term/assigned-terms";
 import {insideClasses, spanClasses} from "../nav-frame/class-names";
-import {getTaxonomyTerms, getTermsFromSlot, isHeaderTerm, requestMergeTerms} from "../store/utils";
+import {getTaxonomyTerms, getTermsFromSlot, requestMergeTerms} from "../store/utils";
 
 function slotToolClassNames(slot) {
     let classNames = ['ntm-slot-tool'];
@@ -82,33 +82,11 @@ function SlotItemWrap(props) {
                     </div>
                     <hr/>
                 </div>
-                <div className="ntm-slot-item">
-                    <h4>
-                        Assigned term(s)
-                    </h4>
-                    <ul className="ntm-slot-assigned-terms">
-                        {getTermsFromSlot(map, slot.id).map(term => {
-                            return (
-                                <li
-                                    key={term.id}
-                                    className={isHeaderTerm(map, slot.id, term.id) ? "header-term" : ""}
-                                    title={"Term ID: " + term.id}
-                                >
-                                    {term.name}
-                                    <span
-                                        className="remove-term"
-                                        onClick={() => {
-                                            dispatch(removeTermFromSlot({
-                                                slot: slot,
-                                                term: term,
-                                            }));
-                                        }}
-                                    >&times;</span>
-                                </li>
-                            )
-                        })}
-                    </ul>
-                </div>
+                <AssignedTerms
+                    map={map}
+                    slot={slot}
+                    terms={getTermsFromSlot(map, slot.id)}
+                />
                 <hr/>
                 <div className="ntm-slot-item">
                     <h4>Actions</h4>

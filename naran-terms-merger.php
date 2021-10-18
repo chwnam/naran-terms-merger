@@ -27,8 +27,5 @@ const NTM_PRIORITY = 280;
 
 ntm();
 
-
 // TODO: 50  키보드 단축키로 사용 가능하게.
-// TODO: 100 텀/슬롯 툴바에 모두 열기/접기 구현.
 // TODO: 200 번역.
-// TODO: 100 텀이 있음에도 sorry no terms found. 라는 말이 나오는 건 이상함.

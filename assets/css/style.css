@@ -22,12 +22,24 @@
     display: flex;
 }
 
-.ntm-frame-controls > li {
+.ntm-frame-controls > li:nth-child(3) {
     flex-grow: 1;
 }
 
 .ntm-frame-controls > li:not(:last-of-type) {
     margin-right: 20px;
+}
+
+#ntm-frame-terms .ntm-frame-controls .expand-collapse {
+    padding-top: 5px;
+}
+
+#ntm-frame-slots .ntm-frame-controls .expand-collapse {
+    padding-top: 5px;
+}
+
+.ntm-frame-controls .expand-collapse > a {
+    text-decoration: none;
 }
 
 .ntm-frame-controls .pagination {
@@ -180,6 +192,11 @@
     color: #919191;
     font-size: 0.88em;
     font-weight: 600;
+}
+
+.ntm-slot-assigned-terms.no-assigned-terms {
+    font-style: italic;
+    color: #50575e;
 }
 
 #ntm-slots {

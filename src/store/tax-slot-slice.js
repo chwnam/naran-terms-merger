@@ -309,7 +309,32 @@ export const taxSlotSlice = createSlice({
             map.headerTerms[slot.id] = 0;
 
             return state;
-        }
+        },
+        expandAllTerms: (state) => {
+            state.terms.forEach(term => {
+                term.collapsed = false;
+            });
+
+            return state;
+        },
+        collapseAllTerms: (state) => {
+            state.terms.forEach(term => {
+                term.collapsed = true;
+            });
+            return state;
+        },
+        expandAllSlots: (state) => {
+            state.slots.forEach(slot => {
+                slot.collapsed = false;
+            });
+            return state;
+        },
+        collapseAllSlots: (state) => {
+            state.slots.forEach(slot => {
+                slot.collapsed = true;
+            });
+            return state;
+        },
     }
 });
 
@@ -330,6 +355,10 @@ export const {
     removeSlot,
     updateHeaderTerm,
     afterMerge,
+    expandAllTerms,
+    collapseAllTerms,
+    expandAllSlots,
+    collapseAllSlots,
 } = taxSlotSlice.actions;
 
 export default taxSlotSlice.reducer;
