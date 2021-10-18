@@ -38,7 +38,7 @@ function TermsList() {
         if (!taxonomy.length) {
             text = '[Please choose a taxonomy.]';
         } else {
-            text = '[No terms found. You may need to click load button.]';
+            text = '[No terms found.]';
         }
 
         return (

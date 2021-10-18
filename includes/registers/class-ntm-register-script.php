@@ -45,10 +45,10 @@ if ( ! class_exists( 'NTM_Register_Script' ) ) {
 				NTM_Registrable_Script::WP_SCRIPT
 			);
 
-			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			if ( in_array( wp_get_environment_type(), [ 'local', 'develop' ], true ) ) {
 				yield new NTM_Registrable_Script(
 					'ntm-live-reload',
-					'http://localhost:35729/livereload.js',
+					'http://localhost:35729/livereload.js'
 				);
 			}
 		}
