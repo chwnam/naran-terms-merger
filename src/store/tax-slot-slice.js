@@ -105,10 +105,15 @@ export const taxSlotSlice = createSlice({
         },
         // Select term.
         updateTerm: (state, action) => {
-            let term = state.terms.find(term => term.id === action.payload.term.id);
+            const selected = action.payload.term,
+                toggle = action.payload.hasOwnProperty('toggle') ? !!action.payload.toggle : true;
+
+            let term = state.terms.find(term => term.id === selected.id);
 
             if (term) {
-                term.collapsed = !term.collapsed;
+                if (toggle) {
+                    term.collapsed = !term.collapsed;
+                }
                 state.term = term;
             }
 
@@ -170,17 +175,22 @@ export const taxSlotSlice = createSlice({
         },
         // Create a new slot.
         addNewSlot: (state) => {
-            state.slots.push(newSlot(state.counter++));
+            if (state.slots.length < state.maxNumSlots) {
+                state.slots.push(newSlot(state.counter++));
+            }
 
             return state;
         },
         // Set the current slot.
         selectSlot: (state, action) => {
             const slot = action.payload.slot,
+                toggle = action.payload.hasOwnProperty('toggle') ? !!action.payload.toggle : true,
                 current = state.slots.find(s => s.id === slot.id);
 
             if (current) {
-                current.collapsed = !current.collapsed;
+                if (toggle) {
+                    current.collapsed = !current.collapsed;
+                }
                 state.slot = current;
             }
 
