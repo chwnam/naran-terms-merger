@@ -84,6 +84,7 @@ function TaxonomySelector() {
                     dispatch(updateTermsOrderBy(newTermsOrder));
                     update(getTermsListUrl(hierarchical, flat, taxonomy), {orderBy: newTermsOrder})
                 }}
+                disabled={0 === taxonomy.length}
             >
                 <option value="name-asc">Name Asc.</option>
                 <option value="name-desc">Name Desc.</option>
@@ -102,6 +103,7 @@ function TaxonomySelector() {
                     dispatch(updateTermsPerPage(newPerPage));
                     update(getTermsListUrl(hierarchical, flat, taxonomy), {perPage: newPerPage});
                 }}
+                disabled={0 === taxonomy.length}
             >
                 <option value={10}>10</option>
                 <option value={30}>30</option>

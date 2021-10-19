@@ -92,6 +92,9 @@ if ( ! class_exists( 'NTM_Terms_Merger' ) ) {
 				wp_send_json_error( $errors );
 			}
 
+            // TODO: 텀 ID 가 실제로 없으면 그냥 필터.
+            // TODO: 헤더 텀과 나머지 텀중 일부가 이미 같은 포스트에 같이 관계를 가지는 경우 DB 에러가 난다. 이를 수정해야 한다.
+
 			// change object ids.
 			global $wpdb;
 
