@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {Provider, useDispatch} from 'react-redux';
+import {Provider, useDispatch, useSelector} from 'react-redux';
 
 import store from "./store/store";
 import ExpandCollapse from "./nav-frame/expand-collapse";
@@ -18,7 +18,8 @@ import TermPaginator from "./tax-term/term-paginator";
 import {collapseAllSlots, collapseAllTerms, expandAllSlots, expandAllTerms,} from './store/tax-slot-slice';
 
 function TermsMerger() {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(),
+        {terms, slots} = useSelector(state => state.taxSlot);
 
     return <>
         <NavWrap>
@@ -30,6 +31,7 @@ function TermsMerger() {
                 <FrameControls>
                     <TaxonomySelector/>
                     <ExpandCollapse
+                        show={terms.length > 0}
                         onExpandAll={() => {
                             dispatch(expandAllTerms());
                         }}
@@ -47,6 +49,7 @@ function TermsMerger() {
                 <FrameControls>
                     <SlotAdder/>
                     <ExpandCollapse
+                        show={slots.length > 0}
                         onExpandAll={() => {
                             dispatch(expandAllSlots());
                         }}

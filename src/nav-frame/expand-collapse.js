@@ -1,31 +1,40 @@
 import React from 'react';
 
 function ExpandCollapse(props) {
-    const {onExpandAll, onCollapseAll} = props;
+    const {
+        onExpandAll,
+        onCollapseAll,
+    } = props;
 
-    return (
-        <li>
-            <div className="expand-collapse">
-                <a
-                    href="#"
-                    onClick={e => {
-                        e.preventDefault();
-                        onExpandAll();
-                    }}
-                >Expand All</a>
+    const show = (props.hasOwnProperty('show') && props.show);
 
-                <span className="control-separator">|</span>
+    if (show) {
+        return (
+            <li>
+                <div className="expand-collapse">
+                    <a
+                        href="#"
+                        onClick={e => {
+                            e.preventDefault();
+                            onExpandAll();
+                        }}
+                    >Expand All</a>
 
-                <a
-                    href="#"
-                    onClick={e => {
-                        e.preventDefault();
-                        onCollapseAll();
-                    }}
-                >Collapse All</a>
-            </div>
-        </li>
-    );
+                    <span className="control-separator">|</span>
+
+                    <a
+                        href="#"
+                        onClick={e => {
+                            e.preventDefault();
+                            onCollapseAll();
+                        }}
+                    >Collapse All</a>
+                </div>
+            </li>
+        );
+    } else {
+        return <li>&nbsp;</li>;
+    }
 }
 
 export default ExpandCollapse;
