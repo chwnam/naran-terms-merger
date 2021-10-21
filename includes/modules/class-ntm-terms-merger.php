@@ -112,7 +112,7 @@ if ( ! class_exists( 'NTM_Terms_Merger' ) ) {
 			// Remove duplicated relationships.
 			$query = "DELETE FROM {$wpdb->term_relationships}" .
 			         " WHERE term_taxonomy_id IN ({$placeholders})" .
-			         " AND object_id IN (SELECT object_id FRO {$wpdb->term_relationships} WHERE term_taxonomy_id=%d)";
+			         " AND object_id IN (SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id=%d)";
 			$wpdb->query( $wpdb->prepare( $query, array_merge( $merged_tt, [ $header_tt ] ) ) );
 
 			// Update term_relationships.
