@@ -9,6 +9,10 @@ function TermItemWrap(props) {
         {slots, map} = useSelector(state => state.taxSlot),
         dispatch = useDispatch();
 
+    const slotId = getSlotIdByTermId(map, term.id),
+        slotIndex = slots.findIndex(slot => slot.id === slotId),
+        slot = slotIndex > -1 ? slots[slotIndex] : null;
+
     return (
         <>
             <div
@@ -19,6 +23,11 @@ function TermItemWrap(props) {
             >
                 <h3 className="ntm-item-title">
                     [#{term.id}] {term.name}
+                    {slot ? (
+                        <span className="ntm-designated-slot-name">
+                            #{slotIndex + 1} {slot.name}
+                        </span>
+                    ) : ''}
                 </h3>
                 <div className="ntm-item-control">
                     <span className={spanClasses(term)}/>
@@ -43,7 +52,7 @@ function TermItemWrap(props) {
                     <label htmlFor="designated-slot">Designated to</label>
 
                     <select
-                        value={getSlotIdByTermId(map, term.id)}
+                        value={slotId}
                         onChange={(e) => {
                             dispatch(designateSlot({
                                 term: term,
