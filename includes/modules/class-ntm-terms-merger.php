@@ -92,9 +92,6 @@ if ( ! class_exists( 'NTM_Terms_Merger' ) ) {
 				wp_send_json_error( $errors );
 			}
 
-            // TODO: 텀 ID 가 실제로 없으면 그냥 필터.
-            // TODO: 헤더 텀과 나머지 텀중 일부가 이미 같은 포스트에 같이 관계를 가지는 경우 DB 에러가 난다. 이를 수정해야 한다.
-
 			// change object ids.
 			global $wpdb;
 
@@ -102,8 +99,6 @@ if ( ! class_exists( 'NTM_Terms_Merger' ) ) {
 			$header_tax   = '';
 			$merged_tt    = [];
 			$placeholders = implode( ', ', array_pad( [], count( $terms ) - 1, '%d' ) );
-			$query        = "UPDATE {$wpdb->term_relationships} " .
-			                "SET term_taxonomy_id=%d WHERE term_taxonomy_id IN ({$placeholders})";
 
 			foreach ( $terms as $term ) {
 				if ( $term->term_id === $header_term ) {
@@ -114,6 +109,15 @@ if ( ! class_exists( 'NTM_Terms_Merger' ) ) {
 				}
 			}
 
+			// Remove duplicated relationships.
+			$query = "DELETE FROM {$wpdb->term_relationships}" .
+			         " WHERE term_taxonomy_id IN ({$placeholders})" .
+			         " AND object_id IN (SELECT object_id FRO {$wpdb->term_relationships} WHERE term_taxonomy_id=%d)";
+			$wpdb->query( $wpdb->prepare( $query, array_merge( $merged_tt, [ $header_tt ] ) ) );
+
+			// Update term_relationships.
+			$query = "UPDATE {$wpdb->term_relationships}" .
+			         " SET term_taxonomy_id=%d WHERE term_taxonomy_id IN ({$placeholders})";
 			$wpdb->get_results( $wpdb->prepare( $query, array_merge( [ $header_tt ], $merged_tt ) ) );
 
 			foreach ( $terms as $term ) {
