@@ -16,7 +16,7 @@ import TaxonomySelector from "./tax-term/taxonomy-selector";
 import TermsList from "./tax-term/terms-list";
 import TermPaginator from "./tax-term/term-paginator";
 import {collapseAllSlots, collapseAllTerms, expandAllSlots, expandAllTerms, updateTerm,} from './store/tax-slot-slice';
-import TermsMergerHotKeys from "./tax-term/terms-merger-hot-keys";
+// import TermsMergerHotKeys from "./tax-term/terms-merger-hot-keys";
 
 
 function TermsMerger() {
@@ -66,7 +66,7 @@ function TermsMerger() {
                     </FrameContent>
                 </Frame>
             </FrameWrap>
-            <TermsMergerHotKeys/>
+            {/*<TermsMergerHotKeys/>*/}
         </>
     )
 }
