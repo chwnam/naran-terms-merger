@@ -12,7 +12,7 @@ import {
 } from "../store/tax-slot-slice";
 import AssignedTerms from "../tax-term/assigned-terms";
 import {insideClasses, spanClasses} from "../nav-frame/class-names";
-import {getTaxonomyTerms, getTermsFromSlot, requestMergeTerms} from "../store/utils";
+import {getTaxonomyTerms, getTermsFromSlot, getTermsListUrl, requestMergeTerms} from "../store/utils";
 
 function slotToolClassNames(slot) {
     let classNames = ['ntm-slot-tool'];
@@ -26,7 +26,15 @@ function slotToolClassNames(slot) {
 
 function SlotItemWrap(props) {
     const {index, slot} = props,
-        {map, hierarchical, flat, taxonomy} = useSelector(state => state.taxSlot),
+        {
+            map,
+            hierarchical,
+            flat,
+            taxonomy,
+            termsOrderBy,
+            termsPerPage,
+            termsCurrentPage,
+        } = useSelector(state => state.taxSlot),
         dispatch = useDispatch();
 
     return (
@@ -122,8 +130,13 @@ function SlotItemWrap(props) {
                                     requestMergeTerms(termIds, headerTerm).then(r => {
                                         if (r.success) {
                                             dispatch(afterMerge({slot: slot}));
-                                            getTaxonomyTerms(hierarchical, flat, taxonomy).then(terms => {
-                                                dispatch(updateTerms({terms: terms}));
+                                            getTaxonomyTerms(
+                                                getTermsListUrl(hierarchical, flat, taxonomy), {
+                                                    orderBy: termsOrderBy,
+                                                    perPage: termsPerPage,
+                                                    page: termsCurrentPage,
+                                                }).then(response => {
+                                                dispatch(updateTerms(response));
                                             });
                                             alert('Successfully merged!');
                                         } else {

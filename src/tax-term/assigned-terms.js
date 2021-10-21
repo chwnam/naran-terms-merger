@@ -20,7 +20,7 @@ function AssignedTerms(props) {
                                 className={isHeaderTerm(map, slot.id, term.id) ? "header-term" : ""}
                                 title={"Term ID: " + term.id}
                             >
-                                {term.name}
+                                [#{term.id}] {term.name}
                                 <span
                                     className="remove-term"
                                     onClick={() => {
